@@ -1,6 +1,6 @@
 // THIS FILE CONTROLLERS THE STUDENTS API ROUTES
 const Student = require("../Schema/Student")
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 JWT_SECRET="SAIT@MAJORPROJECT"
 

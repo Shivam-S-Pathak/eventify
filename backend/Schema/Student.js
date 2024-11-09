@@ -24,7 +24,7 @@ const StudentSchema = new Schema(
 StudentSchema.pre("save", async function (next) {
   const user = this;
   if (user.isModified("password")) {
-    const bcrypt = require("bcrypt");
+    const bcrypt = require("bcryptjs");
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
   }

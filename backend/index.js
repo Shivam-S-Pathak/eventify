@@ -1,28 +1,23 @@
 const express = require("express");
 const connection = require("./DB_cannection");
 const cors = require("cors");
+require("dotenv").config();
 const STUDENT_ROUTES = require("./Router/Student_Router");
 
 const app = express();
-const Db_URI =
-  "mongodb+srv://shivampathak2100:F9oUD0VPNY356Cdf@cluster0.zbsnz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const PORT = process.env.PORT || 8005;
 
-connection(Db_URI)
+connection(process.env.DB_URL)
   .then(() => console.log("DB CONNECTED ........"))
   .catch((e) => console.log("ERROR: ", e));
-
-
 app.use(cors());
 app.use(express.json());
-
-
 app.get("/", (req, res) => {
   res.json({
-    msg: "HELLO CODER! SERVER IS RUNNING FINE......",
+    msg: "HEELO CODER DO NOT WORRY SERVER IS RUNNING FINE......",
   });
 });
-
-
 app.use("/api/student", STUDENT_ROUTES);
-
-module.exports = app;
+app.listen(PORT, () => {
+  console.log("SERVOR IS UP AT PORT NUMBER 8005");
+});
