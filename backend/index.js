@@ -12,8 +12,7 @@ connection(Db_URI)
 .catch((e)=> console.log("ERROR: ",e))
 app.use(cors())
 app.use(express.json())
-app.use(cors())
-app.get("/test",(req,res)=>{
+app.get("/",(req,res)=>{
     res.json({
         msg:"HEELO CODER DO NOT WORRY SERVER IS RUNNING FINE......"
     })
