@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,18 +9,32 @@ import {
   Container,
   Card,
   CardContent,
+  CardMedia,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import EastIcon from "@mui/icons-material/East";
 import EventIcon from "@mui/icons-material/Event";
 import PeopleIcon from "@mui/icons-material/People";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import Grid from "@mui/material/Grid2";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import EastIcon from "@mui/icons-material/East";
+import GroupIcon from "@mui/icons-material/Group";
+import SchoolIcon from "@mui/icons-material/School";
+import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   return (
     <Box sx={{ width: "100%", overflowX: "hidden" }} color="black">
-
       {/* Hero Section */}
       <Box
         sx={{
@@ -42,10 +57,16 @@ const LandingPage = () => {
           >
             Discover, Register, Celebrate!
           </Typography>
-          <Typography variant="h6" paragraph color="#F0F7EE" fontWeight="bolder">
+          <Typography
+            variant="h6"
+            paragraph
+            color="#F0F7EE"
+            fontWeight="bolder"
+          >
             Your one-stop solution for organizing and managing all college
             events.
           </Typography>
+
           <Button
             variant="contained"
             size="large"
@@ -55,25 +76,86 @@ const LandingPage = () => {
               fontWeight: "bold",
               textTransform: "capitalize",
             }}
+            onClick={handleOpenModal}
           >
-            Get Started <EastIcon sx={{ml:1}} />
+            Get Started <EastIcon sx={{ ml: 1 }} />
           </Button>
         </Container>
       </Box>
 
-     
+      {/* Modal for Role Selection */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogTitle align="center">Select Your Role</DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 2,
+              mt: 2,
+            }}
+          >
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<SchoolIcon />}
+              sx={{
+                width: "100%",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                justifyContent: "flex-start",
+                py: 1.5,
+                px: 2,
+              }}
+              onClick={() => {
+                handleCloseModal();
+                // Add navigation or action for student participant
+                navigate("/student/signin");
+              }}
+            >
+              Student Participant
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<GroupIcon />}
+              sx={{
+                width: "100%",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                justifyContent: "flex-start",
+                py: 1.5,
+                px: 2,
+              }}
+              onClick={() => {
+                handleCloseModal();
+                // Add navigation or action for organizers
+                navigate("/organiser/signin");
+              }}
+            >
+              Organizers
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
+
       {/* Featured Events Section */}
       <Box sx={{ py: 8, bgcolor: "#fff" }}>
         <Container>
           <Typography variant="h4" align="center" gutterBottom>
             Featured Events
           </Typography>
-          <Grid container spacing={2} sx={{display:"flex" , justifyContent:"center"  , align:"center"}}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ display: "flex", justifyContent: "center", align: "center" }}
+          >
             {Array.from({ length: 4 }).map((_, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
                 <Card>
                   <img
-                    src={`./public/2nd-banner.jpg`}
+                    src={`./2nd-banner.jpg`}
                     alt={`Event ${index + 1}`}
                     style={{
                       width: "100%",
@@ -101,8 +183,7 @@ const LandingPage = () => {
             Ready to be a part of these Events?
           </Typography>
           <Typography variant="body1" align="center" paragraph>
-            Reach out to our team in case of any query related to
-            college event!
+            Reach out to our team in case of any query related to college event!
           </Typography>
           <Box sx={{ textAlign: "center" }}>
             <Button variant="contained" color="primary" size="large">
