@@ -1,4 +1,4 @@
-// StudentLogin.jsx
+// StudentSignup.jsx
 
 import React, { useState } from "react";
 import {
@@ -11,47 +11,46 @@ import {
   Button,
   Paper,
 } from "@mui/material";
-import { API } from "../../source/api.js";
+// import Alert from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { API } from "../../source/api.js";
 
-const StudentLogin = ({ setIsAuthenticated }) => {
+const signUpVals = {
+  fullname: "",
+  email: "",
+  password: "",
+};
+
+const StudentSignup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [errors, setError] = useState("");
 
-  const loginIntialVals = {
-    email: "",
-    password: "",
-  };
-  const [login, setLogin] = useState(loginIntialVals);
-
-  const handleChange = (e) => {
-    setLogin({ ...login, [e.target.name]: e.target.value });
-  };
+  const [signup, setSignUp] = useState(signUpVals);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
     try {
-      let response = await API.getStudentLogin(login);
-      console.log("API Response:", response);
+      let response = await API.getOrganiserSignup(signup);
       if (response.isSuccess) {
-        sessionStorage.setItem(
-          "ParticipantUser",
-          JSON.stringify(response.data)
-        );
-        setIsAuthenticated(true);
-        navigate("/participants/homepage");
-        setLogin(loginIntialVals);
+        navigate("/student/signin");
+        setSignUp(signUpVals);
       }
+      setLoading(false);
     } catch (error) {
-      console.error("Error during login:", error.message || error);
+      if (error.code === 400) {
+        setError("*email is already exists");
+      } else {
+        setError("*An error occurred during signup. Please try again.");
+      }
+
       setLoading(false);
     }
-    setLoading(false);
   };
-  const handletabChange = () => {
-    navigate("/organiser/signin");
+
+  const handleChange = (e) => {
+    setSignUp({ ...signup, [e.target.name]: e.target.value });
   };
   return (
     <Container>
@@ -61,14 +60,6 @@ const StudentLogin = ({ setIsAuthenticated }) => {
           boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
         }}
       >
-        <Tabs variant="fullWidth">
-          <Tab
-            label="Participant Login"
-            sx={{ textWrap: "nowrap", color: "white", bgcolor: "#7B2D26" }}
-          />
-
-          <Tab label="Organizer Login" onClick={handletabChange} />
-        </Tabs>
         <Box
           sx={{
             display: "flex",
@@ -81,9 +72,9 @@ const StudentLogin = ({ setIsAuthenticated }) => {
           <Typography
             variant="h5"
             align="center"
-            sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
+            sx={{ fontWeight: 600, color: "text.primary", mb: 3, mt: 3 }}
           >
-            Participant Login here
+            Organiser signup here
           </Typography>
           <form onSubmit={handleSubmit}>
             <Box
@@ -96,27 +87,44 @@ const StudentLogin = ({ setIsAuthenticated }) => {
               }}
             >
               <TextField
+                label="Fullname"
+                type="text"
+                variant="outlined"
+                name="fullname"
+                value={signup.fullname}
+                fullWidth
+                sx={{ margin: "1rem 0 1rem 0" }}
+                onChange={handleChange}
+                autoComplete="off"
+                required
+              />
+              <TextField
                 label="Email"
                 type="email"
                 variant="outlined"
                 name="email"
-                value={login.email}
-                onChange={handleChange}
                 fullWidth
+                value={signup.email}
                 sx={{ margin: "1rem 0 1rem 0" }}
+                onChange={handleChange}
                 autoComplete="off"
+                required
               />
               <TextField
                 label="Password"
                 type="password"
                 variant="outlined"
                 name="password"
-                onChange={handleChange}
-                value={login.password}
+                value={signup.password}
                 fullWidth
-                autoComplete="off"
                 sx={{ margin: "1rem 0 1rem 0" }}
+                onChange={handleChange}
+                autoComplete="off"
+                required
               />
+              {errors && (
+                <Typography sx={{ color: "red", mb: 2 }}>{errors}</Typography>
+              )}
               <Button
                 variant="contained"
                 fullWidth
@@ -131,18 +139,18 @@ const StudentLogin = ({ setIsAuthenticated }) => {
                   color: "white",
                 }}
               >
-                {loading ? "Loging in..." : "Login"}
+                {loading ? "Singing in...." : "Sign up"}
               </Button>
             </Box>
           </form>
         </Box>
         <Typography sx={{ color: "black", pb: 1 }}>
-          Didn't have an account?
-          <Link to="/student/signup">Sign up</Link>
+          Already have an account?
+          <Link to="/student/signin">Sign in</Link>
         </Typography>
       </Box>
     </Container>
   );
 };
 
-export default StudentLogin;
+export default StudentSignup;
