@@ -17,7 +17,7 @@ const OrganiserLogin = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    let response = await API.getOrganiserLogin();
+    // let response = await API.getOrganiserLogin();
     if (response.isSuccess) {
     }
   };

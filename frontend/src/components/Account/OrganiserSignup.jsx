@@ -32,7 +32,7 @@ const StudentSignup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      let response = await API.getOrganiserSignup(signup);
+      // let response = await API.getOrganiserSignup(signup);
       if (response.isSuccess) {
         navigate("/student/signin");
         setSignUp(signUpVals);
