@@ -39,7 +39,7 @@ const OrganiserLogin = () => {
             onClick={handleTabChange}
           />
 
-          <Tab label="Organizer Login" sx={{color: "white", bgcolor: "#7B2D26" }} />
+          <Tab label="Organizer Login" sx={{color: "white", bgcolor: "#7B2D26" ,  borderRadius:"0 0.8rem 0 0", }} />
         </Tabs>
         <Box
           sx={{
@@ -88,6 +88,7 @@ const OrganiserLogin = () => {
                 sx={{
                   my: 2,
                   py: 1.2,
+                  mb:6,
                   textTransform: "capitalize",
                   fontSize: "1rem",
                   maxWidth: "100%",
