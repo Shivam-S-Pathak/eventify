@@ -14,7 +14,7 @@ import StudentLogin from "./components/Account/StudentLogin.jsx";
 import OrganiserLogin from "./components/Account/OrganiserLogin.jsx";
 import LandingPage from "./components/LandPage/LandingPage.jsx";
 import StudentSignup from "./components/Account/StudentsSignup.jsx";
-import StudentHomePage from "./components/Homepages/StudenstHomepage.jsx";
+import StudentHomePage from "./components/Homepages/StudentHomePage.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
