@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
     msg: "HEELO CODER DO NOT WORRY SERVER IS RUNNING FINE......",
   });
 });
-app.use("/api/student", STUDENT_ROUTES);
+app.use("/", STUDENT_ROUTES);
 app.listen(PORT, () => {
   console.log("SERVOR IS UP AT PORT NUMBER 8005");
 });

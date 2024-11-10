@@ -19,6 +19,13 @@ const Login = () => {
     setActiveTab(newValue);
   };
 
+  const handleSubmit=async ()=>{
+    let response = await API.getStudentLogin();
+    if (response.isSuccess){
+      
+    }
+  }
+
   const renderLoginForm = (role) => (
     <Box
       component="form"
@@ -31,35 +38,37 @@ const Login = () => {
         width: "100%",
       }}
     >
-      <TextField
-        label="Email"
-        type="email"
-        variant="outlined"
-        fullWidth
-        sx={{ maxWidth: "100%" }}
-      />
-      <TextField
-        label="Password"
-        type="password"
-        variant="outlined"
-        fullWidth
-        sx={{ maxWidth: "100%" }}
-      />
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{
-          my: 2,
-          py: 1.2,
-          textTransform: "capitalize",
-          fontSize: "1rem",
-          maxWidth: "100%",
-          bgcolor: "#7B2D26",
-          color: "#D7C9AA",
-        }}
-      >
-        {role} Login
-      </Button>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          fullWidth
+          sx={{ maxWidth: "100%" }}
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          sx={{ maxWidth: "100%" }}
+        />
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{
+            my: 2,
+            py: 1.2,
+            textTransform: "capitalize",
+            fontSize: "1rem",
+            maxWidth: "100%",
+            bgcolor: "#7B2D26",
+            color: "#D7C9AA",
+          }}
+        >
+          {role} Login
+        </Button>
+      </form>
     </Box>
   );
 
@@ -76,13 +85,12 @@ const Login = () => {
           value={activeTab}
           onChange={handleChange}
           variant="fullWidth"
-       
           textColor="inherit"
           sx={{
             "& .MuiTabs-indicator": {
               backgroundColor: "#7B2D26", // custom color
             },
-            
+
             color: "#7B2D26",
             fontWeight: "bold",
           }}
