@@ -21,7 +21,7 @@ const signUpVals = {
   password: "",
 };
 
-const StudentSignup = () => {
+const OrganiserSignup = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errors, setError] = useState("");
@@ -32,9 +32,9 @@ const StudentSignup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // let response = await API.getOrganiserSignup(signup);
+      let response = await API.getOrganiserSignup(signup);
       if (response.isSuccess) {
-        navigate("/student/signin");
+        navigate("/organiser/signin");
         setSignUp(signUpVals);
       }
       setLoading(false);
@@ -146,11 +146,11 @@ const StudentSignup = () => {
         </Box>
         <Typography sx={{ color: "black", pb: 1 }}>
           Already have an account?
-          <Link to="/student/signin">Sign in</Link>
+          <Link to="/organiser/signin">Sign in</Link>
         </Typography>
       </Box>
     </Container>
   );
 };
 
-export default StudentSignup;
+export default OrganiserSignup;

@@ -1,6 +1,7 @@
 // StudentHomePage.jsx
 
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import {
   AppBar,
   Toolbar,
@@ -15,6 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 
+import { DataContext } from "../../context/DataProvider";
 const events = [
   {
     title: "Cultural Fest",
@@ -29,17 +31,37 @@ const events = [
   // ... more events
 ];
 
-const StudentHomePage = () => {
+const StudentHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
   const navigate = useNavigate();
-
+  const { account, setAccount } = useContext(DataContext);
   const handleLogout = () => {
-    sessionStorage.removeItem("ParticipantUser"); 
-    navigate("/student/signin");
+    sessionStorage.removeItem("ParticipantUser");
+    setIsAuthenticated(false);
+    navigate("/");
   };
 
+  const handleClick = () => {
+    navigate("/organiser/signup");
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const user = sessionStorage.getItem("ParticipantUser");
+
+      if (user) {
+        const parsedUser = JSON.parse(user);
+
+        if (parsedUser.user?.fullname && parsedUser.user?.email) {
+          setAccount({
+            username: parsedUser.user.fullname,
+            email: parsedUser.user.email,
+          });
+        }
+      }
+    }
+  }, [isAuthenticated, setAccount]);
   return (
     <>
-     
       <AppBar position="static" sx={{ bgcolor: "#7B2D26" }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -48,11 +70,17 @@ const StudentHomePage = () => {
           <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>
+          <Button color="inherit" onClick={handleClick}>
+            organiser Sing up
+          </Button>
         </Toolbar>
       </AppBar>
 
       {/* Main Content */}
       <Container sx={{ py: 4 }}>
+        <Typography sx={{ color: "black" }}>
+          Hello {account.username}
+        </Typography>
         <Typography variant="h4" gutterBottom align="center">
           Ongoing Events
         </Typography>

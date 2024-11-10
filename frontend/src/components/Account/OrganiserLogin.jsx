@@ -12,14 +12,41 @@ import {
   Paper,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { API } from "../../source/api.js";
 
-const OrganiserLogin = () => {
+const OrganiserLogin = ({ setIsAuthenticated2 }) => {
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
-    // let response = await API.getOrganiserLogin();
-    if (response.isSuccess) {
+  const [loading, setLoading] = useState(false);
+
+  const loginIntialVals = {
+    email: "",
+    password: "",
+  };
+  const [login, setLogin] = useState(loginIntialVals);
+
+  const handleChange = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    try {
+      let response = await API.getOrganiserLogin(login);
+      console.log("API Response:", response);
+      if (response.isSuccess) {
+        sessionStorage.setItem("OrganiserUser", JSON.stringify(response.data));
+        setIsAuthenticated2(true);
+        navigate("/organiser/homepage");
+        setLogin(loginIntialVals);
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message || error);
+      setLoading(false);
     }
+    setLoading(false);
   };
   const handleTabChange = () => {
     navigate("/student/signin");
@@ -35,11 +62,18 @@ const OrganiserLogin = () => {
         <Tabs variant="fullWidth">
           <Tab
             label="Participant Login"
-            sx={{ textWrap: "nowrap"}}
+            sx={{ textWrap: "nowrap" }}
             onClick={handleTabChange}
           />
 
-          <Tab label="Organizer Login" sx={{color: "white", bgcolor: "#7B2D26" ,  borderRadius:"0 0.8rem 0 0", }} />
+          <Tab
+            label="Organizer Login"
+            sx={{
+              color: "white",
+              bgcolor: "#7B2D26",
+              borderRadius: "0 0.8rem 0 0",
+            }}
+          />
         </Tabs>
         <Box
           sx={{
@@ -59,7 +93,6 @@ const OrganiserLogin = () => {
           </Typography>
           <form onSubmit={handleSubmit}>
             <Box
-              component="form"
               sx={{
                 textAlign: "center",
                 minWidth: "20rem",
@@ -72,23 +105,31 @@ const OrganiserLogin = () => {
                 label="Email"
                 type="email"
                 variant="outlined"
+                name="email"
+                value={login.email}
+                onChange={handleChange}
                 fullWidth
                 sx={{ margin: "1rem 0 1rem 0" }}
+                autoComplete="off"
               />
               <TextField
                 label="Password"
                 type="password"
                 variant="outlined"
+                name="password"
+                onChange={handleChange}
+                value={login.password}
                 fullWidth
+                autoComplete="off"
                 sx={{ margin: "1rem 0 1rem 0" }}
               />
               <Button
                 variant="contained"
                 fullWidth
+                type="submit"
                 sx={{
                   my: 2,
                   py: 1.2,
-                  mb:6,
                   textTransform: "capitalize",
                   fontSize: "1rem",
                   maxWidth: "100%",
@@ -96,7 +137,7 @@ const OrganiserLogin = () => {
                   color: "white",
                 }}
               >
-                Login
+                {loading ? "Loging in..." : "Login"}
               </Button>
             </Box>
           </form>
