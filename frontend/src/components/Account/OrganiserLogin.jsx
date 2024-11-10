@@ -11,74 +11,76 @@ import {
   Button,
   Paper,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrganiserLogin = () => {
-
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     let response = await API.getOrganiserLogin();
     if (response.isSuccess) {
     }
   };
-
+  const handleTabChange = () => {
+    navigate("/student/signin");
+  };
   return (
     <Container>
       <Box
-        // elevation={20}
         sx={{
           borderRadius: 3,
           boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
         }}
       >
-        <Tabs
-         
-          variant="fullWidth"
-          textColor="inherit"
-          sx={{
-            "& .MuiTabs-indicator": {
-              backgroundColor: "#7B2D26", // custom color
-            },
+        <Tabs variant="fullWidth">
+          <Tab
+            label="Participant Login"
+            sx={{ textWrap: "nowrap"}}
+            onClick={handleTabChange}
+          />
 
-            color: "#7B2D26",
-            fontWeight: "bold",
+          <Tab label="Organizer Login" sx={{color: "white", bgcolor: "#7B2D26" }} />
+        </Tabs>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minWidth: "25rem",
+            margin: "1rem 0 1rem 0",
           }}
         >
-          <Tab label="Participant OrganiserLogin" sx={{ textWrap: "nowrap" }} />
-          <Tab label="Organizer OrganiserLogin" />
-        </Tabs>
-        <Box sx={{ m: 2 }}>
           <Typography
             variant="h5"
             align="center"
             sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
           >
-            
+            Organiser Login here
           </Typography>
-          <Box
-            component="form"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              alignItems: "center",
-              textAlign: "center",
-              width: "100%",
-            }}
-          >
-            <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <Box
+              component="form"
+              sx={{
+                textAlign: "center",
+                minWidth: "20rem",
+                // bgcolor:"blue",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <TextField
                 label="Email"
                 type="email"
                 variant="outlined"
                 fullWidth
-                sx={{ maxWidth: "100%" }}
+                sx={{ margin: "1rem 0 1rem 0" }}
               />
               <TextField
                 label="Password"
                 type="password"
                 variant="outlined"
                 fullWidth
-                sx={{ maxWidth: "100%" }}
+                sx={{ margin: "1rem 0 1rem 0" }}
               />
               <Button
                 variant="contained"
@@ -90,13 +92,13 @@ const OrganiserLogin = () => {
                   fontSize: "1rem",
                   maxWidth: "100%",
                   bgcolor: "#7B2D26",
-                  color: "#D7C9AA",
+                  color: "white",
                 }}
               >
-                Organiser Login
+                Login
               </Button>
-            </form>
-          </Box>
+            </Box>
+          </form>
         </Box>
       </Box>
     </Container>

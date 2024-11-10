@@ -11,96 +11,96 @@ import {
   Button,
   Paper,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 const StudentLogin = () => {
-
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    let response = await API.getStudentStudentLogin();
+    let response = await API.getStudentLogin();
     if (response.isSuccess) {
     }
   };
+  const handletabChange = () => {
+    navigate("/organiser/signin");
+  };
+  return (
+    <Container>
+      <Box
+        sx={{
+          borderRadius: 3,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+        }}
+      >
+        <Tabs variant="fullWidth">
+          <Tab
+            label="Participant Login"
+            sx={{ textWrap: "nowrap", color: "white", bgcolor: "#7B2D26" }}
+          />
 
-
-    return (
-      <Container>
+          <Tab label="Organizer Login" onClick={handletabChange} />
+        </Tabs>
         <Box
-          // elevation={20}
           sx={{
-            borderRadius: 3,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minWidth:"25rem",
+            margin:"1rem 0 1rem 0"
           }}
         >
-          <Tabs
-           
-            variant="fullWidth"
-            textColor="inherit"
-            sx={{
-              "& .MuiTabs-indicator": {
-                backgroundColor: "#7B2D26", // custom color
-              },
-  
-              color: "#7B2D26",
-              fontWeight: "bold",
-            }}
+          <Typography
+            variant="h5"
+            align="center"
+            sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
           >
-            <Tab label="Participant OrganiserLogin" sx={{ textWrap: "nowrap" }} />
-            <Tab label="Organizer OrganiserLogin" />
-          </Tabs>
-          <Box sx={{ m: 2 }}>
-            <Typography
-              variant="h5"
-              align="center"
-              sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
-            >
-              
-            </Typography>
+            Participant Login here
+          </Typography>
+          <form onSubmit={handleSubmit}>
             <Box
               component="form"
               sx={{
+                textAlign: "center",
+                minWidth: "20rem",
+                // bgcolor:"blue",
                 display: "flex",
                 flexDirection: "column",
-                gap: 2,
-                alignItems: "center",
-                textAlign: "center",
-                width: "100%",
               }}
             >
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  label="Email"
-                  type="email"
-                  variant="outlined"
-                  fullWidth
-                  sx={{ maxWidth: "100%" }}
-                />
-                <TextField
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  sx={{ maxWidth: "100%" }}
-                />
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    my: 2,
-                    py: 1.2,
-                    textTransform: "capitalize",
-                    fontSize: "1rem",
-                    maxWidth: "100%",
-                    bgcolor: "#7B2D26",
-                    color: "#D7C9AA",
-                  }}
-                >
-                  Student Login
-                </Button>
-              </form>
+              <TextField
+                label="Email"
+                type="email"
+                variant="outlined"
+                fullWidth
+                sx={{ margin: "1rem 0 1rem 0" }}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                sx={{ margin: "1rem 0 1rem 0" }}
+              />
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{
+                  my: 2,
+                  py: 1.2,
+                  textTransform: "capitalize",
+                  fontSize: "1rem",
+                  maxWidth: "100%",
+                  bgcolor: "#7B2D26",
+                  color: "white",
+                }}
+              >
+                Login
+              </Button>
             </Box>
-          </Box>
+          </form>
         </Box>
-      </Container>
+      </Box>
+    </Container>
   );
 };
 
