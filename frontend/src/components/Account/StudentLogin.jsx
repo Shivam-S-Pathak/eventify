@@ -54,94 +54,102 @@ const StudentLogin = ({ setIsAuthenticated }) => {
     navigate("/organiser/signin");
   };
   return (
-    <Container>
-      <Box
-        sx={{
-          borderRadius: 3,
-          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-        }}
-      >
-        <Tabs variant="fullWidth">
-          <Tab
-            label="Participant Login"
-            sx={{ textWrap: "nowrap", color: "white", bgcolor: "#7B2D26" }}
-          />
-
-          <Tab label="Organizer Login" onClick={handletabChange} />
-        </Tabs>
+    <>
+      {" "}
+      <Container>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            minWidth: "25rem",
-            margin: "1rem 0 1rem 0",
+            borderRadius: 3,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
           }}
         >
-          <Typography
-            variant="h5"
-            align="center"
-            sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
-          >
-            Participant Login here
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <Box
+          <Tabs variant="fullWidth">
+            <Tab
+              label="Participant Login"
               sx={{
-                textAlign: "center",
-                minWidth: "20rem",
-                // bgcolor:"blue",
-                display: "flex",
-                flexDirection: "column",
+                textWrap: "nowrap",
+                color: "white",
+                bgcolor: "#7B2D26",
+                borderRadius: "0.8rem 0 0 0",
               }}
+            />
+
+            <Tab label="Organizer Login" onClick={handletabChange} />
+          </Tabs>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              minWidth: "25rem",
+              margin: "1rem 0 1rem 0",
+            }}
+          >
+            <Typography
+              variant="h5"
+              align="center"
+              sx={{ fontWeight: 600, color: "text.primary", mb: 3 }}
             >
-              <TextField
-                label="Email"
-                type="email"
-                variant="outlined"
-                name="email"
-                value={login.email}
-                onChange={handleChange}
-                fullWidth
-                sx={{ margin: "1rem 0 1rem 0" }}
-                autoComplete="off"
-              />
-              <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                name="password"
-                onChange={handleChange}
-                value={login.password}
-                fullWidth
-                autoComplete="off"
-                sx={{ margin: "1rem 0 1rem 0" }}
-              />
-              <Button
-                variant="contained"
-                fullWidth
-                type="submit"
+              Participant Login here
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Box
                 sx={{
-                  my: 2,
-                  py: 1.2,
-                  textTransform: "capitalize",
-                  fontSize: "1rem",
-                  maxWidth: "100%",
-                  bgcolor: "#7B2D26",
-                  color: "white",
+                  textAlign: "center",
+                  minWidth: "20rem",
+                  // bgcolor:"blue",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                {loading ? "Loging in..." : "Login"}
-              </Button>
-            </Box>
-          </form>
+                <TextField
+                  label="Email"
+                  type="email"
+                  variant="outlined"
+                  name="email"
+                  value={login.email}
+                  onChange={handleChange}
+                  fullWidth
+                  sx={{ margin: "1rem 0 1rem 0" }}
+                  autoComplete="off"
+                />
+                <TextField
+                  label="Password"
+                  type="password"
+                  variant="outlined"
+                  name="password"
+                  onChange={handleChange}
+                  value={login.password}
+                  fullWidth
+                  autoComplete="off"
+                  sx={{ margin: "1rem 0 1rem 0" }}
+                />
+                <Button
+                  variant="contained"
+                  fullWidth
+                  type="submit"
+                  sx={{
+                    my: 2,
+                    py: 1.2,
+                    textTransform: "capitalize",
+                    fontSize: "1rem",
+                    maxWidth: "100%",
+                    bgcolor: "#7B2D26",
+                    color: "white",
+                  }}
+                >
+                  {loading ? "Loging in..." : "Login"}
+                </Button>
+              </Box>
+            </form>
+          </Box>
+          <Typography sx={{ color: "black", pb: 1 }}>
+            Didn't have an account?
+            <Link to="/student/signup">Sign up</Link>
+          </Typography>
         </Box>
-        <Typography sx={{ color: "black", pb: 1 }}>
-          Didn't have an account?
-          <Link to="/student/signup">Sign up</Link>
-        </Typography>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
 
