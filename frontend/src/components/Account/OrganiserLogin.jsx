@@ -130,6 +130,7 @@ const OrganiserLogin = ({ setIsAuthenticated2 }) => {
                 sx={{
                   my: 2,
                   py: 1.2,
+                  mb:6,
                   textTransform: "capitalize",
                   fontSize: "1rem",
                   maxWidth: "100%",

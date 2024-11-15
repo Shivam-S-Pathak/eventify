@@ -143,7 +143,7 @@ const StudentLogin = ({ setIsAuthenticated }) => {
               </Box>
             </form>
           </Box>
-          <Typography sx={{ color: "black", pb: 1 }}>
+          <Typography sx={{ color: "black", pb: 1 , textAlign:"center"}}>
             Didn't have an account?
             <Link to="/student/signup">Sign up</Link>
           </Typography>
