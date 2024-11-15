@@ -329,13 +329,10 @@
 
 // export default OrganizerHomePage;
 
-
-
 // ------------------------
 
-
-
 import React, { useContext, useState, useEffect } from "react";
+import { API_URL } from "../../constants/config.js";
 import axios from "axios"; // Use axios for API calls
 import {
   AppBar,
@@ -368,7 +365,9 @@ const NotificationIcon = () => <span style={{ fontSize: "24px" }}>🔔</span>;
 const EventIcon = () => <span style={{ fontSize: "24px" }}>📅</span>;
 const PeopleIcon = () => <span style={{ fontSize: "24px" }}>👥</span>;
 const SettingsIcon = () => <span style={{ fontSize: "24px" }}>⚙️</span>;
-const AddIcon = () => <span style={{ fontSize: "24px", color: "white" }}>➕</span>;
+const AddIcon = () => (
+  <span style={{ fontSize: "24px", color: "white" }}>➕</span>
+);
 
 const theme = createTheme({
   palette: {
@@ -415,7 +414,12 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
     e.preventDefault();
 
     // Ensure required fields are provided
-    if (!newEvent.title || !newEvent.date || !newEvent.description || !isImage) {
+    if (
+      !newEvent.title ||
+      !newEvent.date ||
+      !newEvent.description ||
+      !isImage
+    ) {
       console.error("All fields including image are required!");
       return;
     }
@@ -429,11 +433,10 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
-    
-    
+
     try {
       const response = await axios.post(
-        "https://major1-pearl.vercel.app/event/create", // Replace with your backend URL
+        `${API_URL}/event/create`, // Replace with your backend URL
         formData,
         {
           headers: {
@@ -450,7 +453,10 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
       setOpenAddEventDialog(false);
     } catch (error) {
       console.log(FormData);
-      console.error("Error adding event:", error.response?.data || error.message);
+      console.error(
+        "Error adding event:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -478,7 +484,11 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
           </Toolbar>
         </AppBar>
 
-        <Drawer variant="temporary" open={mobileOpen} onClose={() => setMobileOpen(false)}>
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+        >
           <List>
             {["Events", "Participants", "Settings"].map((text, index) => (
               <ListItem button key={text}>
@@ -555,7 +565,10 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={() => setOpenAddEventDialog(false)} color="secondary">
+                  <Button
+                    onClick={() => setOpenAddEventDialog(false)}
+                    color="secondary"
+                  >
                     Cancel
                   </Button>
                   <Button type="submit" color="primary">
@@ -572,6 +585,3 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
 };
 
 export default OrganizerHomePage;
-
-
-
