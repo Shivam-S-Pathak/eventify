@@ -4,7 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const STUDENT_ROUTES = require("./Router/Student_Router");
 const ADMIN_ROUTES=require("./Router/Admin_Routes")
-const EVENTS_ROUTES= require("./Router/Events_Routes")
+const EVENTS_ROUTES= require("./Router/Events_Routes");
+const Enrollment_Routes = require("./Router/Enrollment_Routes")
 
 const app = express();
 const PORT = process.env.PORT || 8005;
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/", STUDENT_ROUTES);
 app.use("/", ADMIN_ROUTES);
 app.use("/", EVENTS_ROUTES);
+app.use("/", Enrollment_Routes);
 app.listen(PORT, () => {
   console.log("SERVOR IS UP AT PORT NUMBER ",PORT);
 });
