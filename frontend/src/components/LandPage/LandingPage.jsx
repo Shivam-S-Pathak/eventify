@@ -23,6 +23,39 @@ import GroupIcon from "@mui/icons-material/Group";
 import SchoolIcon from "@mui/icons-material/School";
 import { Link, useNavigate } from "react-router-dom";
 
+const EventCards = [
+  {
+    img: "./party.jpg",
+    title: "Party and Dancing",
+    description: "Join us for an unforgettable experience",
+  },
+  {
+    img: "./singing.jpg",
+    title: "Singing",
+    description: "Join us for an unforgettable experience",
+  },
+  {
+    img: "./travelling.jpg",
+    title: "Traveling and Picnic",
+    description: "Join us for an unforgettable experience",
+  },
+  {
+    img: "./sports.png",
+    title: "Games and Sports",
+    description: "Join us for an unforgettable experience",
+  },
+  {
+    img: "./hacathons.jpg",
+    title: "Tech fest and Hacakathons",
+    description: "Join us for an unforgettable experience",
+  },
+  {
+    img: "./manymore.png",
+    title: "and explore many more events ",
+    description: "Join us for an unforgettable experience",
+  },
+];
+
 const LandingPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
@@ -151,12 +184,12 @@ const LandingPage = () => {
             spacing={2}
             sx={{ display: "flex", justifyContent: "center", align: "center" }}
           >
-            {Array.from({ length: 4 }).map((_, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <Card>
+            {EventCards.map(({ title, img, description }, index) => (
+              <Grid item xs={12} sm={6} md={3}>
+                <Card key={index}>
                   <img
-                    src={`./2nd-banner.jpg`}
-                    alt={`Event ${index + 1}`}
+                    src={img}
+                    alt="event"
                     style={{
                       width: "100%",
                       height: "200px",
@@ -164,9 +197,9 @@ const LandingPage = () => {
                     }}
                   />
                   <CardContent>
-                    <Typography variant="h6">Event {index + 1}</Typography>
+                    <Typography variant="h6">{title}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      Join us for an unforgettable experience!
+                      {description}
                     </Typography>
                   </CardContent>
                 </Card>

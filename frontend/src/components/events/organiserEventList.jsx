@@ -12,10 +12,13 @@ import {
 import Grid from "@mui/material/Grid2";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-const EventList = () => {
+const OrganiserEventList = ({ setIsregister, isRegister }) => {
   const [events, setEvents] = useState([]);
   // const [loading, setLoading] = useState(true);
 
+  const handleClose = () => {
+    setIsregister(!isRegister);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,6 +55,7 @@ const EventList = () => {
                 display: "flex",
                 flexDirection: "column",
                 width: "100%",
+                bgcolor: isRegister ? "grey" : "",
                 maxWidth: 320,
                 margin: "0 auto",
                 boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
@@ -93,37 +97,89 @@ const EventList = () => {
                 </Typography>
                 <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
                   {/* Enroll Now Button */}
+                  {isRegister ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{
+                        flexGrow: 1,
+                        bgcolor: "linear-gradient(135deg, #2575fc, #6a11cb)",
+                        "&:hover": {
+                          bgcolor: "linear-gradient(135deg, #1e62d5, #551a8b)",
+                          transform: "scale(1.05)",
+                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                        },
+                        transition:
+                          "background 0.3s, transform 0.3s, box-shadow 0.3s",
+                        borderRadius: 4,
+                        textTransform: "none",
+                        padding: "10px 20px",
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onClick={handleClose}
+                    >
+                      Close registration
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{
+                        flexGrow: 1,
+                        bgcolor: "linear-gradient(135deg, #2575fc, #6a11cb)",
+                        "&:hover": {
+                          bgcolor: "linear-gradient(135deg, #1e62d5, #551a8b)",
+                          transform: "scale(1.05)",
+                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                        },
+                        transition:
+                          "background 0.3s, transform 0.3s, box-shadow 0.3s",
+                        borderRadius: 4,
+                        textTransform: "none",
+                        padding: "10px 20px",
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onClick={handleClose}
+                    >
+                      open registration
+                    </Button>
+                  )}
+
+                  {/* Learn More Button */}
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     size="small"
                     sx={{
                       flexGrow: 1,
-                      bgcolor: "linear-gradient(135deg, #2575fc, #6a11cb)",
-                      "&:hover": {
-                        bgcolor: "linear-gradient(135deg, #1e62d5, #551a8b)",
-                        transform: "scale(1.05)",
-                        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                      },
-                      transition:
-                        "background 0.3s, transform 0.3s, box-shadow 0.3s",
+                      padding: "10px 20px",
+                      fontSize: "16px",
                       borderRadius: 4,
                       textTransform: "none",
-                      padding: "10px 20px",
                       fontWeight: "bold",
-                      fontSize: "13px",
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      borderColor: "#2575fc",
+                      "&:hover": {
+                        backgroundColor: "#2575fc",
+                        borderColor: "#1e62d5",
+                        color: "#fff",
+                      },
+                      transition: "background-color 0.3s, color 0.3s",
                     }}
-                    endIcon={<ArrowForwardIcon sx={{ fontSize: "20px" }} />}
                   >
-                    Close reguistration
+                    Learn More
                   </Button>
-
-                  {/* Learn More Button */}
-                 
                 </Box>
               </CardContent>
             </Card>
@@ -134,4 +190,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default OrganiserEventList;
