@@ -42,6 +42,7 @@ function App() {
   const aT2 = sessionStorage.getItem("OrganiserUser");
   const [isAuthenticated, setIsAuthenticated] = useState(aT ? true : false);
   const [isAuthenticated2, setIsAuthenticated2] = useState(aT2 ? true : false);
+  const [isRegister, setIsregister] = useState(false);
 
   return (
     <>
@@ -104,6 +105,9 @@ function App() {
                   <OrganizerHomePage
                     setIsAuthenticated2={setIsAuthenticated2}
                     isAuthenticated2={isAuthenticated2}
+                    isRegister={isRegister}
+                    setIsregister={setIsregister}
+                    
                   />
                 }
               />

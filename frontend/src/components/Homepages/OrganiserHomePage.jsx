@@ -1,7 +1,7 @@
 // OrganizerHomePage.jsx
 
 import React, { useContext, useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../constants/config.js";
 import axios from "axios"; // Use axios for API calls
 import {
@@ -34,7 +34,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { DataContext } from "../../context/DataProvider.jsx";
 // components
-import EventList from "../events/EventList.jsx";
+import OrganiserEventList from "../events/organiserEventList.jsx";
 
 // Export extra icons
 const MenuIcon = () => <span style={{ fontSize: "24px" }}>☰</span>;
@@ -43,13 +43,17 @@ const AddIcon = () => (
   <span style={{ fontSize: "24px", color: "white" }}>➕</span>
 );
 
-const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
+const OrganizerHomePage = ({
+  setIsAuthenticated2,
+  isAuthenticated2,
+  isRegister,
+  setIsregister,
+}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const { account, setAccount } = useContext(DataContext);
   const [isload, setIsLoad] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (isAuthenticated2) {
@@ -83,10 +87,10 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
   const handleChange = (e) => {
     setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
   };
-  
-  const handleSignup=()=>{
-  navigate("/organiser/signup")
-  }
+
+  const handleSignup = () => {
+    navigate("/organiser/signup");
+  };
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
@@ -174,16 +178,21 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Organiser's panel welocome ,  {account.username}
+            Organiser's panel welocome , {account.username}
           </Typography>
-    
+
           <IconButton color="inherit">
             <NotificationIcon />
           </IconButton>
           <Avatar sx={{ ml: 1 }}>
             {account?.username?.charAt(0).toUpperCase()}
           </Avatar>
-          <Button  sx={{ bgcolor: "green", color: "white" , mr:2 , ml:3 }} onClick={handleSignup}>Sign up new organiser</Button>
+          <Button
+            sx={{ bgcolor: "green", color: "white", mr: 2, ml: 3 }}
+            onClick={handleSignup}
+          >
+            Sign up new organiser
+          </Button>
           <Button
             sx={{ bgcolor: "red", color: "white" }}
             onClick={handleLogout}
@@ -236,7 +245,8 @@ const OrganizerHomePage = ({ setIsAuthenticated2, isAuthenticated2 }) => {
             marginTop: 3,
           }}
         >
-          <EventList />
+          <OrganiserEventList  isRegister={isRegister}
+                    setIsregister={setIsregister} />
         </Box>
 
         {/* Add Event FAB */}
