@@ -82,6 +82,19 @@ const getallpendingrequest= async(req,res)=>{
   }
 }
 
+const notificationcount=async (req,res)=>{
+  try {
+    
+    const data=await Enrollment.find({status:"pending"})
+    const notification_Count=data.length
+    res.status(200).json({ count:notification_Count});
+  } catch (error) {
+    res
+    .status(500)
+    .json({ message: "Error fetching enrollment", error: error.message });
+  }
+}
 
 
-module.exports = { createEnrollment, upload ,getallpendingrequest};
+
+module.exports = { createEnrollment, upload ,getallpendingrequest,notificationcount};
