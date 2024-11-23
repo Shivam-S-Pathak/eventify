@@ -6,15 +6,30 @@ import {
   CardContent,
   Typography,
   Button,
-  CircularProgress,
   Box,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+//components
+import EnrollmentForm from "./EventEnrollmentForm.jsx";
+
 const EventList = () => {
   const [events, setEvents] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [evtName, setEvtName] = useState("");
+
+  const [openEnrollmentForm, setOpenEnrollmentForm] = useState(false);
+
+  const handleEnrollmentOpen = () => {
+    setOpenEnrollmentForm(true);
+  };
+  const handleEnrollmentClose = () => setOpenEnrollmentForm(false);
+
+  const handleEnrollmentSubmit = (data) => {
+    console.log("Enrollment Data Submitted:", data);
+    setOpenEnrollmentForm(false);
+    alert("You have successfully enrolled!");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +68,7 @@ const EventList = () => {
                 flexDirection: "column",
                 width: "100%",
                 maxWidth: 320,
+                cursor: "pointer",
                 margin: "0 auto",
                 boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
                 borderRadius: 8,
@@ -97,6 +113,10 @@ const EventList = () => {
                     variant="contained"
                     color="primary"
                     size="small"
+                    onClick={() => {
+                      handleEnrollmentOpen();
+                      setEvtName(event.title);
+                    }}
                     sx={{
                       flexGrow: 1,
                       bgcolor: "linear-gradient(135deg, #2575fc, #6a11cb)",
@@ -151,6 +171,12 @@ const EventList = () => {
           </Grid>
         ))}
       </Grid>
+      <EnrollmentForm
+        open={openEnrollmentForm}
+        handleClose={handleEnrollmentClose}
+        handleSubmit={handleEnrollmentSubmit}
+        evtName={evtName}
+      />
     </Box>
   );
 };

@@ -1,25 +1,16 @@
-// OrganizerHomePage.jsx
+// StudentHomePage.jsx
 
 import React, { useContext, useState, useEffect } from "react";
-import {useNavigate} from "react-router-dom";
-import { API_URL } from "../../constants/config.js";
-import axios from "axios"; // Use axios for API calls
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Avatar,
   Box,
   Button,
-  Container,
   CssBaseline,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Drawer,
   Fab,
   IconButton,
-  InputAdornment,
-  TextField,
   Toolbar,
   Typography,
   useTheme,
@@ -28,7 +19,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import EventIcon from "@mui/icons-material/Event";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -43,24 +33,23 @@ const AddIcon = () => (
   <span style={{ fontSize: "24px", color: "white" }}>➕</span>
 );
 
-const OrganizerHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
+const StudentHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [tabValue, setTabValue] = useState(0);
   const { account, setAccount } = useContext(DataContext);
-  const [isload, setIsLoad] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (isAuthenticated) {
-      const user = sessionStorage.getItem("ParticipentUser");
+      const user = sessionStorage.getItem("ParticipantUser");
       if (user) {
         const parsedUser = JSON.parse(user);
         if (parsedUser.user?.fullname && parsedUser.user?.email) {
           setAccount({
             username: parsedUser.user.fullname,
             email: parsedUser.user.email,
+            id:parsedUser.user.id
           });
+          
         }
       }
     }
@@ -72,61 +61,12 @@ const OrganizerHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
     description: "",
   };
 
-  const [openAddEventDialog, setOpenAddEventDialog] = useState(false);
-  const [newEvent, setNewEvent] = useState(initialvals);
-  const [isImage, setIsImage] = useState(null);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleChange = (e) => {
-    setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
-  };
-  
-  const handleSignup=()=>{
-  navigate("/organiser/signup")
-  }
-
-  const handleAddEvent = async (e) => {
-    e.preventDefault();
-    setIsLoad(true);
-
-    if (
-      !newEvent.title ||
-      !newEvent.date ||
-      !newEvent.description ||
-      !isImage
-    ) {
-      alert("All fields including image are required!");
-      setIsLoad(false);
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("title", newEvent.title);
-    formData.append("date", newEvent.date);
-    formData.append("description", newEvent.description);
-    formData.append("image", isImage);
-
-    try {
-      const response = await axios.post(`${API_URL}/event/create`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Event added successfully:", response.data);
-      setNewEvent({ title: "", date: "", description: "" });
-      setIsImage(null);
-      setOpenAddEventDialog(false);
-      setIsLoad(false);
-    } catch (error) {
-      console.error(
-        "Error adding event:",
-        error.response?.data || error.message
-      );
-      setIsLoad(false);
-    }
+  const handleSignup = () => {
+    navigate("/organiser/signup");
   };
 
   const handleLogout = () => {
@@ -174,18 +114,18 @@ const OrganizerHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Organiser's panel welocome ,  {account.username}
+            Participant's panel welocome , {account.username}
           </Typography>
-    
+
           <IconButton color="inherit">
             <NotificationIcon />
           </IconButton>
           <Avatar sx={{ ml: 1 }}>
             {account?.username?.charAt(0).toUpperCase()}
           </Avatar>
-          <Button  sx={{ bgcolor: "green", color: "white" , mr:2 , ml:3 }} onClick={handleSignup}>Sign up new organiser</Button>
+
           <Button
-            sx={{ bgcolor: "red", color: "white" }}
+            sx={{ bgcolor: "red", color: "white", ml: 2 }}
             onClick={handleLogout}
           >
             Logout
@@ -238,233 +178,9 @@ const OrganizerHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
         >
           <EventList />
         </Box>
-
-        {/* Add Event FAB */}
-        <Fab
-          aria-label="add"
-          onClick={() => {
-            setOpenAddEventDialog(true);
-            setNewEvent(initialvals);
-            setIsImage(null);
-          }}
-          sx={{
-            position: "fixed",
-            bottom: 16,
-            right: 16,
-            bgcolor: "yellow",
-            "&:hover": {
-              background: "linear-gradient(to right, #2575fc, #6a11cb)",
-            },
-          }}
-        >
-          <AddIcon />
-        </Fab>
-
-        {/* Add Event Dialog */}
-        <Dialog
-          open={openAddEventDialog}
-          onClose={() => {
-            setOpenAddEventDialog(false);
-            setNewEvent(initialvals);
-            setIsImage(null);
-          }}
-          aria-labelledby="add-event-dialog-title"
-          maxWidth="sm"
-          fullWidth
-          sx={{
-            "& .MuiDialog-paper": {
-              borderRadius: "12px",
-              padding: "20px",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-        >
-          <DialogTitle
-            id="add-event-dialog-title"
-            sx={{ fontWeight: "bold", fontSize: "1.5rem", color: "#333" }}
-          >
-            Add New Event
-          </DialogTitle>
-          <form onSubmit={handleAddEvent}>
-            <DialogContent>
-              <Box display="flex" flexDirection="column" gap={3}>
-                {/* Event Name */}
-                <TextField
-                  margin="dense"
-                  label="Event Name"
-                  fullWidth
-                  variant="outlined"
-                  value={newEvent.title}
-                  name="title"
-                  onChange={handleChange}
-                  required
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "8px",
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#444",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                  }}
-                />
-
-                {/* Event Date */}
-                <TextField
-                  margin="dense"
-                  label="Event Date"
-                  type="date"
-                  fullWidth
-                  variant="outlined"
-                  value={newEvent.date}
-                  name="date"
-                  onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  required
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "8px",
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#444",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                  }}
-                />
-
-                {/* Event Description */}
-                <TextField
-                  margin="dense"
-                  label="Event Description"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                  value={newEvent.description}
-                  name="description"
-                  onChange={handleChange}
-                  required
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "8px",
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "#444",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#ccc",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#6a11cb",
-                    },
-                  }}
-                />
-
-                {/* File Upload */}
-                <Box display="flex" gap={2} flexDirection="row">
-                  <Button
-                    variant="contained"
-                    component="label"
-                    sx={{
-                      background: "linear-gradient(to right, #6a11cb, #2575fc)",
-                      padding: "10px 20px",
-                      "&:hover": {
-                        background:
-                          "linear-gradient(to right, #2575fc, #6a11cb)",
-                        transform: "scale(1.05)",
-                        boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-                      },
-                      "& .MuiButton-label": {
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                      },
-                    }}
-                  >
-                    Upload Event Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) => setIsImage(e.target.files[0])}
-                    />
-                  </Button>
-                  {isImage && (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: "900", color: "#333" }}
-                    >
-                      {isImage.name}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  setOpenAddEventDialog(false);
-                  setNewEvent(initialvals);
-                  setIsImage(null);
-                }}
-                color="secondary"
-                sx={{
-                  padding: "10px 20px",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#f50057",
-                    color: "#fff",
-                    transform: "scale(1.05)",
-                  },
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                color="primary"
-                disabled={isload}
-                sx={{
-                  padding: "10px 20px",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#2575fc",
-                    color: "#fff",
-                    transform: "scale(1.05)",
-                    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-                  },
-                }}
-              >
-                {isload ? "Adding..." : "Add Event"}
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
       </Box>
     </Box>
   );
 };
 
-export default OrganizerHomePage;
+export default StudentHomePage;

@@ -7,7 +7,7 @@ const DataProvider = ({ children }) => {
   const organiserUser = JSON.parse(sessionStorage.getItem("OrganiserUser"));
 
   const storedUser = participantUser ||
-    organiserUser || { username: "", email: "" };
+    organiserUser || { username: "", email: "" , id:"" };
 
   const [account, setAccount] = useState(storedUser);
 
