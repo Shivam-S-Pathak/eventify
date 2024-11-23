@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const {createEnrollment,upload} = require("../Controllers/Enrollemt")
+const {createEnrollment,upload,getallpendingrequest} = require("../Controllers/Enrollemt")
 
 router.post("/enroll", upload.single("ReciptImage"), createEnrollment);
-// router.get("/event/show", getAllEvents);
+router.get("/enroll_pending", getallpendingrequest);
 
 module.exports = router;
