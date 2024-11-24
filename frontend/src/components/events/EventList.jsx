@@ -46,137 +46,143 @@ const EventList = () => {
   }, []);
 
   return (
-    <Box padding={3}>
-      <Typography variant="h4" textAlign="center" gutterBottom>
-        Upcoming Events
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        textAlign="center"
-        gutterBottom
-        color="textSecondary"
-      >
-        Explore the latest events and enroll now!
-      </Typography>
-      <Grid container spacing={3}>
-        {events.map((event) => (
-          <Grid item xs={12} sm={6} md={4} key={event._id}>
-            <Card
-              sx={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                maxWidth: 320,
-                cursor: "pointer",
-                margin: "0 auto",
-                boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-                borderRadius: 8,
-                transition: "transform 0.3s, box-shadow 0.3s",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 12px 24px rgba(0, 0, 0, 0.15)",
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={event.imageLink}
-                alt={event.title}
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        minHeight: "100vh",
+        p: 5,
+        width: "100%",
+      }}
+    >
+      <Box sx={{ width: "100%", maxWidth: 1200 }}>
+        <Typography variant="h4" textAlign="center" gutterBottom>
+          Upcoming Events
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          textAlign="center"
+          gutterBottom
+          color="textSecondary"
+        >
+          Explore the latest events and enroll now!
+        </Typography>
+        <Grid container spacing={3}>
+          {events.map((event) => (
+            <Grid item xs={12} sm={6} md={4} key={event._id}>
+              <Card
                 sx={{
-                  objectFit: "cover",
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  maxWidth: 350,
+                  margin: "0 auto",
+                  boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.03)",
+                    boxShadow: "0 10px 20px rgba(0, 0, 0, 0.25)",
+                  },
                 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ fontWeight: "bold" }}
-                >
-                  {event.title}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" gutterBottom>
-                  {event.description.length > 100
-                    ? `${event.description.substring(0, 100)}...`
-                    : event.description}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  <strong>Date:</strong>{" "}
-                  {new Date(event.date).toLocaleDateString()}
-                </Typography>
-                <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-                  {/* Enroll Now Button */}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={() => {
-                      handleEnrollmentOpen();
-                      setEvtName(event.title);
-                    }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={event.imageLink}
+                  alt={event.title}
+                  sx={{
+                    objectFit: "cover",
+                  }}
+                />
+                <CardContent sx={{ padding: "16px" }}>
+                  <Typography
+                    variant="h6"
                     sx={{
-                      flexGrow: 1,
-                      bgcolor: "linear-gradient(135deg, #2575fc, #6a11cb)",
-                      "&:hover": {
-                        bgcolor: "linear-gradient(135deg, #1e62d5, #551a8b)",
-                        transform: "scale(1.05)",
-                        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                      },
-                      transition:
-                        "background 0.3s, transform 0.3s, box-shadow 0.3s",
-                      borderRadius: 4,
-                      textTransform: "none",
-                      padding: "10px 20px",
-                      fontWeight: "bold",
-                      fontSize: "13px",
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      fontWeight: 600,
+                      fontSize: "1.1rem",
+                      color: "#333",
+                      marginBottom: "8px",
                     }}
-                    endIcon={<ArrowForwardIcon sx={{ fontSize: "20px" }} />}
                   >
-                    Enroll Now
-                  </Button>
-
-                  {/* Learn More Button */}
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    size="small"
+                    {event.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
                     sx={{
-                      flexGrow: 1,
-                      padding: "10px 20px",
-                      fontSize: "16px",
-                      borderRadius: 4,
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      borderColor: "#2575fc",
-                      "&:hover": {
-                        backgroundColor: "#2575fc",
-                        borderColor: "#1e62d5",
+                      fontSize: "0.9rem",
+                      color: "#666",
+                      marginBottom: "12px",
+                    }}
+                  >
+                    {event.description.length > 100
+                      ? `${event.description.substring(0, 100)}...`
+                      : event.description}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "0.85rem", color: "#999" }}
+                  >
+                    <strong>Date:</strong>{" "}
+                    {new Date(event.date).toLocaleDateString()}
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 2, marginTop: "16px" }}>
+                    {/* Enroll Now Button */}
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        handleEnrollmentOpen();
+                        setEvtName(event.title);
+                      }}
+                      sx={{
+                        flex: 1,
+                        textTransform: "none",
+                        fontSize: "0.9rem",
+                        backgroundColor: "#1976d2",
                         color: "#fff",
-                      },
-                      transition: "background-color 0.3s, color 0.3s",
-                    }}
-                  >
-                    Learn More
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <EnrollmentForm
-        open={openEnrollmentForm}
-        handleClose={handleEnrollmentClose}
-        handleSubmit={handleEnrollmentSubmit}
-        evtName={evtName}
-      />
+                        borderRadius: "20px",
+                        "&:hover": {
+                          backgroundColor: "#1565c0",
+                        },
+                      }}
+                      endIcon={<ArrowForwardIcon />}
+                    >
+                      Enroll Now
+                    </Button>
+
+                    {/* Learn More Button */}
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        flex: 1,
+                        textTransform: "none",
+                        fontSize: "0.9rem",
+                        borderColor: "#1976d2",
+                        color: "#1976d2",
+                        borderRadius: "20px",
+                        "&:hover": {
+                          backgroundColor: "#1976d2",
+                          color: "#fff",
+                        },
+                      }}
+                    >
+                      Learn More
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <EnrollmentForm
+          open={openEnrollmentForm}
+          handleClose={handleEnrollmentClose}
+          handleSubmit={handleEnrollmentSubmit}
+          evtName={evtName}
+        />
+      </Box>
     </Box>
   );
 };

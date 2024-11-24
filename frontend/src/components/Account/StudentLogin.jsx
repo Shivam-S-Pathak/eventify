@@ -143,11 +143,17 @@ const StudentLogin = ({ setIsAuthenticated }) => {
               </Box>
             </form>
           </Box>
-          <Typography sx={{ color: "black", pb: 1 , textAlign:"center"}}>
+          <Typography sx={{ color: "black", pb: 1, textAlign: "center" }}>
             Didn't have an account?
             <Link to="/student/signup">Sign up</Link>
           </Typography>
         </Box>
+        <Button
+          onClick={() => navigate("/")}
+          sx={{ textDecoration: "underline", color: "black" }}
+        >
+          Back
+        </Button>
       </Container>
     </>
   );

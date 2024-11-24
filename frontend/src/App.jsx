@@ -19,10 +19,15 @@ import OrganiserSignup from "./components/Account/OrganiserSignup.jsx";
 import OrganizerHomePage from "./components/Homepages/OrganiserHomePage.jsx";
 import PendingRequests from "./components/events/PendingRequest.jsx";
 import OrganiserNavBar from "./components/Navbar/OrganiserNavbar.jsx";
+import StudentNavBar from "./components/Navbar/StudentNavBar.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
     <>
+      <StudentNavBar
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       <Outlet />
     </>
   ) : (

@@ -130,7 +130,7 @@ const OrganiserLogin = ({ setIsAuthenticated2 }) => {
                 sx={{
                   my: 2,
                   py: 1.2,
-                  mb:6,
+                  mb: 6,
                   textTransform: "capitalize",
                   fontSize: "1rem",
                   maxWidth: "100%",
@@ -144,6 +144,12 @@ const OrganiserLogin = ({ setIsAuthenticated2 }) => {
           </form>
         </Box>
       </Box>
+      <Button
+        onClick={() => navigate("/")}
+        sx={{ textDecoration: "underline", color: "black" }}
+      >
+        Back
+      </Button>
     </Container>
   );
 };

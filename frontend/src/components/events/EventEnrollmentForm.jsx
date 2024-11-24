@@ -106,6 +106,7 @@ const EnrollmentForm = ({ open, handleClose, evtName }) => {
               variant="outlined"
               fullWidth
               required
+              disabled
             />
             <Typography sx={{ color: "red", fontSize: "0.8rem" }}>
               Note: *Give your correct email for verification purposes
