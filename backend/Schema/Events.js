@@ -17,6 +17,11 @@ const eventSchema = new mongoose.Schema({
     imageLink: {
         type: String,
         required: true
+    },
+    isclosed:{
+        type: String,
+        enum: ['true','false'],
+        default: 'false'
     }
 });
 const events= mongoose.model('Events', eventSchema);
