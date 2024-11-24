@@ -73,7 +73,7 @@ const getallpendingrequest= async(req,res)=>{
  
   try {
     
-    const data=await Enrollment.find({status:"pending"})
+    const data=await Enrollment.find({status:"pending"}).populate("createdBy")
     res.status(200).json({ data });
   } catch (error) {
     res
