@@ -43,13 +43,16 @@ const StudentHomePage = ({ setIsAuthenticated, isAuthenticated }) => {
       const user = sessionStorage.getItem("ParticipantUser");
       if (user) {
         const parsedUser = JSON.parse(user);
-        if (parsedUser.user?.fullname && parsedUser.user?.email) {
+        if (
+          parsedUser.user?.fullname &&
+          parsedUser.user?.email &&
+          parsedUser.user?.id
+        ) {
           setAccount({
             username: parsedUser.user.fullname,
             email: parsedUser.user.email,
-            id:parsedUser.user.id
+            id: parsedUser.user.id,
           });
-          
         }
       }
     }

@@ -17,6 +17,8 @@ import StudentSignup from "./components/Account/StudentsSignup.jsx";
 import StudentHomePage from "./components/Homepages/StudentHomePage.jsx";
 import OrganiserSignup from "./components/Account/OrganiserSignup.jsx";
 import OrganizerHomePage from "./components/Homepages/OrganiserHomePage.jsx";
+import PendingRequests from "./components/events/PendingRequest.jsx";
+import OrganiserNavBar from "./components/Navbar/OrganiserNavbar.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
@@ -30,6 +32,10 @@ const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
 const PrivateRoute2 = ({ isAuthenticated2, setIsAuthenticated2 }) => {
   return isAuthenticated2 ? (
     <>
+      <OrganiserNavBar
+        isAuthenticated2={isAuthenticated2}
+        setIsAuthenticated2={setIsAuthenticated2}
+      />
       <Outlet />
     </>
   ) : (
@@ -107,7 +113,28 @@ function App() {
                     isAuthenticated2={isAuthenticated2}
                     isRegister={isRegister}
                     setIsregister={setIsregister}
-                    
+                  />
+                }
+              />
+            </Route>
+
+            <Route
+              path="/organiser/pending-requests"
+              element={
+                <PrivateRoute2
+                  isAuthenticated2={isAuthenticated2}
+                  setIsAuthenticated2={setIsAuthenticated2}
+                />
+              }
+            >
+              <Route
+                path="/organiser/pending-requests"
+                element={
+                  <PendingRequests
+                    setIsAuthenticated2={setIsAuthenticated2}
+                    isAuthenticated2={isAuthenticated2}
+                    isRegister={isRegister}
+                    setIsregister={setIsregister}
                   />
                 }
               />

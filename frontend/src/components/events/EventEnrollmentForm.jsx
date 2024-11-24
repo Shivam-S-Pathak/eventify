@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -17,64 +17,54 @@ import axios from "axios";
 const EnrollmentForm = ({ open, handleClose, evtName }) => {
   const { account } = useContext(DataContext);
 
-  // Consolidated state for form fields
   const initialvals = {
-    EventName: "",
+    EventName: evtName || "",
     email: "",
-    createdBy: account.id, // Set `createdBy` directly here
   };
+
   const [details, setDetails] = useState(initialvals);
   const [isImage, setIsImage] = useState(null);
+  useEffect(() => {
+    setDetails((prevDetails) => ({
+      ...prevDetails,
+      EventName: evtName || "",
+    }));
+  }, [evtName]);
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDetails((prevDetails) => {
-      const updatedDetails = { ...prevDetails, [name]: value };
-      console.log("Updated Details:", updatedDetails);
-      return updatedDetails;
-    });
+    setDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+    console.log(details);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
-    // Debugging values before validation
-    console.log("Details before submission:", details);
-    console.log("Image:", isImage);
-
-    // Validation
-    if (
-      !details.EventName ||
-      !details.email ||
-      !details.createdBy ||
-      !isImage
-    ) {
-      alert("All fields including image are required!");
+    if (!details.EventName || !details.email || !account.id || !isImage) {
+      alert("All fields, including the image, are required!");
       return;
     }
 
-    // Create FormData object
     const formData = new FormData();
     formData.append("EventName", details.EventName);
     formData.append("email", details.email);
-    formData.append("createdBy", details.createdBy);
+    formData.append("createdBy", account.id);
     formData.append("ReciptImage", isImage);
 
     console.log("FormData before submission:", formData);
 
-    // Submit the form data
     try {
       const response = await axios.post(`${API_URL}/enroll`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("Event added successfully:", response.data);
 
-      // Reset form fields after successful submission
       setDetails(initialvals);
       setIsImage(null);
-      handleClose(); // Close the dialog
+      handleClose();
     } catch (error) {
       console.error(
         "Error adding event:",
@@ -102,7 +92,7 @@ const EnrollmentForm = ({ open, handleClose, evtName }) => {
       >
         Enroll for the {evtName}
         <Typography sx={{ mt: 1, color: "green" }}>
-          {account.username}, please fill your details below
+          {account?.username}, please fill your details below
         </Typography>
       </DialogTitle>
       <form onSubmit={handleSubmit}>
@@ -155,10 +145,6 @@ const EnrollmentForm = ({ open, handleClose, evtName }) => {
                   background: "linear-gradient(to right, #2575fc, #6a11cb)",
                   transform: "scale(1.05)",
                   boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-                },
-                "& .MuiButton-label": {
-                  fontSize: "14px",
-                  fontWeight: "bold",
                 },
               }}
             >

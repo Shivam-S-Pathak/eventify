@@ -3,7 +3,7 @@ const cloudinary = require("../config/Cloudinary_config.js");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const sendmail = require("../Services/Email_Sending.js");
-const sendokmail = require("../Services/Enroll_okmail.js")
+const sendokmail = require("../Services/Enroll_okmail.js");
 const Enrollment = require("../Schema/Enrollment.js");
 
 // Cloudinary storage configuration
@@ -21,13 +21,19 @@ const upload = multer({ storage });
 const createEnrollment = async (req, res) => {
   try {
     // Validate required fields
-    
-    const { EventName, email, createdBy, status = 'pending',Ticket_No=0} = req.body;
 
-    
+    const {
+      EventName,
+      email,
+      createdBy,
+      status = "pending",
+      Ticket_No = 0,
+    } = req.body;
 
     if (!EventName || !email || !createdBy) {
-      return res.status(400).json({ message: "All required fields must be provided" });
+      return res
+        .status(400)
+        .json({ message: "All required fields must be provided" });
     }
 
     // Check if the student exists
@@ -38,7 +44,7 @@ const createEnrollment = async (req, res) => {
 
     // Handle file upload (assumes multer middleware processed the file)
     const result = await cloudinary.uploader.upload(req.file.path);
-    
+
     // if (!receiptImage) {
     //   return res.status(400).json({ message: "Receipt image is required" });
     // }
@@ -50,12 +56,12 @@ const createEnrollment = async (req, res) => {
       status,
       ReciptImage: result.secure_url,
       createdBy,
-      Ticket_No
+      Ticket_No,
     });
 
     // Save the enrollment to the database
     const savedEnrollment = await newEnrollment.save();
-    await sendmail(email)
+    await sendmail(email);
 
     res.status(201).json({
       message: "Enrollment created successfully",
@@ -70,72 +76,73 @@ const createEnrollment = async (req, res) => {
   }
 };
 
-const getallpendingrequest= async(req,res)=>{
- 
+const getallpendingrequest = async (req, res) => {
   try {
-    
-    const data=await Enrollment.find({status:"pending"}).populate("createdBy")
+    const data = await Enrollment.find({ status: "pending" }).populate(
+      "createdBy"
+    );
     res.status(200).json({ data });
   } catch (error) {
     res
-    .status(500)
-    .json({ message: "Error fetching enrollment", error: error.message });
+      .status(500)
+      .json({ message: "Error fetching enrollment", error: error.message });
   }
-}
+};
 
-const notificationcount=async (req,res)=>{
+const notificationcount = async (req, res) => {
   try {
-    
-    const data=await Enrollment.find({status:"pending"})
-    const notification_Count=data.length
-    res.status(200).json({ count:notification_Count});
+    const data = await Enrollment.find({ status: "pending" });
+    const notification_Count = data.length;
+    res.status(200).json({ count: notification_Count });
   } catch (error) {
     res
-    .status(500)
-    .json({ message: "Error fetching enrollment", error: error.message });
+      .status(500)
+      .json({ message: "Error fetching enrollment", error: error.message });
   }
-}
+};
 
-const accept_enroll=async(req,res)=>{
-     const id=req.params.id
-     const token_no=Math.floor(1000 + Math.random() * 9000)
-    try {
-       const enrollment=await Enrollment.findByIdAndUpdate(
-        id,
-        {
-          status:"confirmed",
-          Ticket_No:token_no
-        },
-        {
-          new:true
-        }
-       ).populate("createdBy")
-       if(!enrollment){
-        res.status(404).send({
-          message:"ENROLL NOT FOUND"
-        })
-       }
-       await sendokmail(enrollment.email,
-                       enrollment.createdBy.fullname,
-                       enrollment.EventName,
-                       enrollment.Ticket_No)
-       res.status(200).send({
-        message:"Status updated sucessfully",
-        enrollment
-       })
-    } catch (error) {
-      res.send(500).send({
-        message:"Error in updation",
-        error:error.message
-      })
+const accept_enroll = async (req, res) => {
+  const id = req.params.id;
+  console.log("this is form server ", id);
+  const token_no = Math.floor(1000 + Math.random() * 9000);
+  try {
+    const enrollment = await Enrollment.findByIdAndUpdate(
+      id,
+      {
+        status: "confirmed",
+        Ticket_No: token_no,
+      },
+      {
+        new: true,
+      }
+    ).populate("createdBy");
+    if (!enrollment) {
+      res.status(404).send({
+        message: "ENROLL NOT FOUND",
+      });
     }
-}
+    await sendokmail(
+      enrollment.email,
+      enrollment.createdBy.fullname,
+      enrollment.EventName,
+      enrollment.Ticket_No
+    );
+    res.status(200).send({
+      message: "Status updated sucessfully",
+      enrollment,
+    });
+  } catch (error) {
+    res.send(500).send({
+      message: "Error in updation",
+      error: error.message,
+    });
+  }
+};
 
-
-module.exports = { 
-             createEnrollment,
-             upload,
-             getallpendingrequest,
-             notificationcount,
-             accept_enroll
-             };
+module.exports = {
+  createEnrollment,
+  upload,
+  getallpendingrequest,
+  notificationcount,
+  accept_enroll,
+};

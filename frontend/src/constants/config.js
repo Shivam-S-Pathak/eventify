@@ -34,4 +34,10 @@ export const SERVICE_URLS = {
   getOrganiserLogin: { url: "/organiser/singin", method: "POST" },
   setData: { url: "/event/create", method: "POST" },
   getData: { url: "/event/show", method: "GET" },
+  getPendingRequest: { url: "/enroll_pending", method: "GET" },
+  acceptRequest: {
+    url: (id) => `/accept_enroll_status/${id}`,
+    method: "PATCH",
+  },
+  getNoti: { url: "/enroll_notificationcount", method: "GET" },
 };
