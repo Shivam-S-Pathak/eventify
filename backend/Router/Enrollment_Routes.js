@@ -4,7 +4,8 @@ const {createEnrollment,
        upload,
        getallpendingrequest,
        notificationcount,
-       accept_enroll } = require("../Controllers/Enrollemt")
+       accept_enroll ,
+decline_enroll} = require("../Controllers/Enrollemt")
 
 router.post("/enroll", upload.single("ReciptImage"), createEnrollment);
 router.get("/enroll_pending", getallpendingrequest);

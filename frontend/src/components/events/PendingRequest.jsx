@@ -27,10 +27,9 @@ const PendingRequests = () => {
       }
     };
     fetchRequests();
-  }, [id]);
+  }, []);
 
   const handleAccept = async (id) => {
-    console.log("Accepted Event ID:", id);
     try {
       let response = await API.acceptRequest({ id });
       console.log("this is response form the accept api ", response.data);
@@ -40,12 +39,9 @@ const PendingRequests = () => {
   };
 
   const handleDecline = async (id) => {
-    console.log("Declined Event ID:", id);
     try {
-      await API.declineRequest(id);
-      setRequests((prevRequests) =>
-        prevRequests.filter((request) => request._id !== id)
-      );
+      let response = await API.declineRequest({ id });
+      console.log("this is response form the accept api ", response.data);
     } catch (error) {
       console.error("Error declining request:", error);
     }

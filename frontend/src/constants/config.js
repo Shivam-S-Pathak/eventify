@@ -39,5 +39,9 @@ export const SERVICE_URLS = {
     url: (id) => `/accept_enroll_status/${id}`,
     method: "PATCH",
   },
+  declineRequest: {
+    url: (id) => `/decline_enroll_status/${id}`,
+    method: "PATCH",
+  },
   getNoti: { url: "/enroll_notificationcount", method: "GET" },
 };
