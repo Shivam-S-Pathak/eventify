@@ -5,6 +5,7 @@ const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const sendmail = require("../Services/Email_Sending.js");
 const sendokmail = require("../Services/Enroll_okmail.js");
 const Enrollment = require("../Schema/Enrollment.js");
+const send_dec_mail=require("../Services/DeclineEmail.js")
 
 // Cloudinary storage configuration
 const storage = new CloudinaryStorage({
@@ -101,48 +102,46 @@ const notificationcount = async (req, res) => {
   }
 };
 
-const accept_enroll = async (req, res) => {
-  const id = req.params.id;
-  console.log("this is form server ", id);
-  const token_no = Math.floor(1000 + Math.random() * 9000);
-  try {
-    const enrollment = await Enrollment.findByIdAndUpdate(
-      id,
-      {
-        status: "confirmed",
-        Ticket_No: token_no,
-      },
-      {
-        new: true,
-      }
-    ).populate("createdBy");
-    if (!enrollment) {
-      res.status(404).send({
-        message: "ENROLL NOT FOUND",
-      });
+const accept_enroll=async(req,res)=>{
+     const id=req.params.id
+     const token_no=Math.floor(1000 + Math.random() * 9000)
+    try {
+       const enrollment=await Enrollment.findByIdAndUpdate(
+        id,
+        {
+          status:"confirmed",
+          Ticket_No:token_no
+        },
+        {
+          new:true
+        }
+       ).populate("createdBy")
+       if(!enrollment){
+        res.status(404).send({
+          message:"ENROLL NOT FOUND"
+        })
+       }
+       await sendokmail(enrollment.email,
+                       enrollment.createdBy.fullname,
+                       enrollment.EventName,
+                       enrollment.Ticket_No)
+       res.status(200).send({
+        message:"Status updated sucessfully",
+        enrollment
+       })
+    } catch (error) {
+      res.send(500).send({
+        message:"Error in updation",
+        error:error.message
+      })
     }
-    await sendokmail(
-      enrollment.email,
-      enrollment.createdBy.fullname,
-      enrollment.EventName,
-      enrollment.Ticket_No
-    );
-    res.status(200).send({
-      message: "Status updated sucessfully",
-      enrollment,
-    });
-  } catch (error) {
-    res.send(500).send({
-      message: "Error in updation",
-      error: error.message,
-    });
-  }
-};
+}
 
-module.exports = {
-  createEnrollment,
-  upload,
-  getallpendingrequest,
-  notificationcount,
-  accept_enroll,
-};
+
+module.exports = { 
+             createEnrollment,
+             upload,
+             getallpendingrequest,
+             notificationcount,
+             accept_enroll
+             };
