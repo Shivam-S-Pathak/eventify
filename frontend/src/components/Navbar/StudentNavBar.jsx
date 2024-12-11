@@ -86,16 +86,16 @@ const StudentNavBar = ({ isAuthenticated, setIsAuthenticated }) => {
     <div>
       <Toolbar />
       <List>
-        {["Events", "Participants", "Settings"].map((text, index) => (
+        {["All Events", "My Events", "Settings"].map((text, index) => (
           <ListItem
             button
             key={text}
             sx={{ cursor: "pointer" }}
             onClick={() => {
               if (index === 0) {
-                navigate("/participant/homepage");
+                navigate("/participants/homepage");
               } else if (index === 1) {
-                navigate("/participant/view-participants");
+                navigate("/participant/my-events");
               } else if (index === 2) {
                 navigate("/participant/settings");
               }

@@ -21,6 +21,8 @@ import { API } from "../../source/api";
 import EventIcon from "@mui/icons-material/Event";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import ErrorIcon from "@mui/icons-material/Error";
 import MenuIcon from "@mui/icons-material/Menu";
 import { DataContext } from "../../context/DataProvider";
 
@@ -98,7 +100,13 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
     <div>
       <Toolbar />
       <List>
-        {["Events", "Participants", "Settings"].map((text, index) => (
+        {[
+          "Events",
+          "Participants",
+          "Verify Ticket",
+          "Alert Notice",
+          "Settings",
+        ].map((text, index) => (
           <ListItem
             button
             key={text}
@@ -108,8 +116,12 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
                 navigate("/organiser/homepage");
               } else if (index === 1) {
                 navigate("/organiser/view-participants");
-              } else if (index === 2) {
+              } else if (index === 4) {
                 navigate("/organiser/settings");
+              } else if (index === 2) {
+                navigate("/organiser/verify-ticket");
+              } else if (index === 3) {
+                navigate("/organiser/notice");
               }
             }}
           >
@@ -118,6 +130,10 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
                 <EventIcon />
               ) : index === 1 ? (
                 <PeopleIcon />
+              ) : index === 2 ? (
+                <TaskAltIcon />
+              ) : index === 3 ? (
+                <ErrorIcon />
               ) : (
                 <SettingsIcon />
               )}
@@ -178,9 +194,17 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
             Organizer's Panel - Welcome, {account.username}
           </Typography>
 
-          <Button onClick={handleNotiClick} sx={{color:"white" , bgcolor:"red" ,  borderRadius:"1rem  0 1rem 0"   , mr:2}}>
+          <Button
+            onClick={handleNotiClick}
+            sx={{
+              color: "white",
+              bgcolor: "red",
+              borderRadius: "1rem  0 1rem 0",
+              mr: 2,
+            }}
+          >
             {" "}
-            <span style={{ fontSize: "24px"  }}>🔔 {notiCount}</span>
+            <span style={{ fontSize: "24px" }}>🔔 {notiCount}</span>
           </Button>
           {/* Avatar */}
           <Avatar

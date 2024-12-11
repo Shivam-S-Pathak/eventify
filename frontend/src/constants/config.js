@@ -44,4 +44,5 @@ export const SERVICE_URLS = {
     method: "PATCH",
   },
   getNoti: { url: "/enroll_notificationcount", method: "GET" },
+  getEvents: { url: "/my-events", method: "GET" },
 };

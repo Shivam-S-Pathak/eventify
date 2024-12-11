@@ -20,6 +20,8 @@ import OrganizerHomePage from "./components/Homepages/OrganiserHomePage.jsx";
 import PendingRequests from "./components/events/PendingRequest.jsx";
 import OrganiserNavBar from "./components/Navbar/OrganiserNavbar.jsx";
 import StudentNavBar from "./components/Navbar/StudentNavBar.jsx";
+import VerifyTicket from "./components/ticket/verifyTicket.jsx";
+import Notice from "./components/Alert/Notice.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
@@ -143,6 +145,33 @@ function App() {
                   />
                 }
               />
+            </Route>
+
+            <Route
+              path="/organiser/verify-ticket"
+              element={
+                <PrivateRoute2
+                  isAuthenticated2={isAuthenticated2}
+                  setIsAuthenticated2={setIsAuthenticated2}
+                />
+              }
+            >
+              <Route
+                path="/organiser/verify-ticket"
+                element={<VerifyTicket />}
+              />
+            </Route>
+
+            <Route
+              path="/organiser/notice"
+              element={
+                <PrivateRoute2
+                  isAuthenticated2={isAuthenticated2}
+                  setIsAuthenticated2={setIsAuthenticated2}
+                />
+              }
+            >
+              <Route path="/organiser/notice" element={<Notice />} />
             </Route>
           </Routes>
         </BrowserRouter>
