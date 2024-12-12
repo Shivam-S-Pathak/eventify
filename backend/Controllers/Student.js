@@ -1,5 +1,6 @@
 // THIS FILE CONTROLLERS THE STUDENTS API ROUTES
 const Student = require("../Schema/Student");
+const alertmail=require("../Services/alertmail.js")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 JWT_SECRET = "SAIT@MAJORPROJECT";
@@ -57,7 +58,30 @@ const studentlogin = async (req, res) => {
   }
 };
 
+const sosmail=async(req,res)=>{
+  try {
+    const {msg}=req.body
+    const stud = await Student.find()
+
+    console.log(msg);
+    console.log(typeof(stud));
+    const emailIds = stud.map((e)=>e.email)
+    console.log(emailIds);
+    for (let i = 0; i < emailIds.length; i++) {
+      
+      console.log(emailIds[i],msg);
+      await alertmail(emailIds[i],msg)
+      
+    }
+    
+    res.status(200).json({"MSG":"MAIL DELIVERED TO ALL THE USER SUCESSFULLY"})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
 module.exports = {
   studentsignup,
   studentlogin,
+  sosmail
 };

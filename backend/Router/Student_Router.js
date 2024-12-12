@@ -1,9 +1,12 @@
 const { Router } = require("express");
-const { studentsignup, studentlogin } = require("../Controllers/Student.js");
+const { studentsignup, studentlogin ,sosmail} = require("../Controllers/Student.js");
 const router = Router();
 
 router.post("/student/signup", studentsignup);
 router.post("/student/signin", studentlogin);
+router.post("/student/sendsosmail", sosmail);
+
+
 
 // router.post("/organiser/signup", organiserSignup);
 // router.post("/organiser/signin", organiserLogin);
