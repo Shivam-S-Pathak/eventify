@@ -2,6 +2,7 @@
 const Student = require("../Schema/Student");
 const alertmail=require("../Services/alertmail.js")
 const bcrypt = require("bcryptjs");
+const Enrollment = require("../Schema/Enrollment.js")
 const jwt = require("jsonwebtoken");
 JWT_SECRET = "SAIT@MAJORPROJECT";
 
@@ -80,8 +81,29 @@ const sosmail=async(req,res)=>{
     res.status(500).json({ message: "Server error" });
   }
 }
+
+const generateIdCard=async(req,res)=>{
+  try {
+    const {tokenNumber} = req.body
+    
+    const Idcard= await Enrollment.find({Ticket_No:tokenNumber}).populate("createdBy")
+    
+    
+    if ((Idcard.length>0)){
+      res.status(200).send({"msg":"sucess",Idcard})
+    }
+    else{
+      res.status(404).send({"msg":"INVALID TOKEN NUMBER"})
+    }
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({ message: "Server error","e":error });
+  }
+}
 module.exports = {
   studentsignup,
   studentlogin,
-  sosmail
+  sosmail,
+  generateIdCard
 };

@@ -28,7 +28,6 @@ const createEnrollment = async (req, res) => {
       email,
       createdBy,
       status = "pending",
-      Ticket_No = 0,
     } = req.body;
 
     if (!EventName || !email || !createdBy) {
