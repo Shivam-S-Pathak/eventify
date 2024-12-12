@@ -1,8 +1,8 @@
 // THIS FILE CONTROLLERS THE STUDENTS API ROUTES
 const Student = require("../Schema/Student");
-const alertmail=require("../Services/alertmail.js")
+const alertmail = require("../Services/alertmail.js");
 const bcrypt = require("bcryptjs");
-const Enrollment = require("../Schema/Enrollment.js")
+const Enrollment = require("../Schema/Enrollment.js");
 const jwt = require("jsonwebtoken");
 JWT_SECRET = "SAIT@MAJORPROJECT";
 
@@ -59,51 +59,49 @@ const studentlogin = async (req, res) => {
   }
 };
 
-const sosmail=async(req,res)=>{
+const sosmail = async (req, res) => {
   try {
-    const {msg}=req.body
-    const stud = await Student.find()
+    const { isAlert } = req.body;
+    const stud = await Student.find();
 
     // console.log(msg)
     // console.log(typeof(stud));
-    const emailIds = stud.map((e)=>e.email)
+    const emailIds = stud.map((e) => e.email);
     // console.log(emailIds);
     for (let i = 0; i < emailIds.length; i++) {
-      
       // console.log(emailIds[i],msg);
-      await alertmail(emailIds[i],msg)
-      
+      await alertmail(emailIds[i], isAlert);
     }
-    
-    res.status(200).json({"MSG":"MAIL DELIVERED TO ALL THE USER SUCESSFULLY"})
+
+    res.status(200).json({ MSG: "MAIL DELIVERED TO ALL THE USER SUCESSFULLY" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
-}
+};
 
-const generateIdCard=async(req,res)=>{
+const generateIdCard = async (req, res) => {
   try {
-    const {tokenNumber} = req.body
-    
-    const Idcard= await Enrollment.find({Ticket_No:tokenNumber}).populate("createdBy")
-    
-    
-    if ((Idcard.length>0)){
-      res.status(200).send({"msg":"sucess",Idcard})
-    }
-    else{
-      res.status(404).send({"msg":"INVALID TOKEN NUMBER"})
+    const { isTicket } = req.body;
+    console.log("this is from the student.js , generatIdCard", isTicket);
+    const Idcard = await Enrollment.findOne({ Ticket_No: isTicket }).populate(
+      "createdBy"
+    );
+
+    if (Idcard) {
+      res.status(200).json({ Idcard });
+    } else {
+      res.status(404).json({ msg: "no ticket found" });
     }
   } catch (error) {
     console.log(error);
-    
-    res.status(500).json({ message: "Server error","e":error });
+
+    res.status(500).json({ message: "Server error", e: error });
   }
-}
+};
 module.exports = {
   studentsignup,
   studentlogin,
   sosmail,
-  generateIdCard
+  generateIdCard,
 };

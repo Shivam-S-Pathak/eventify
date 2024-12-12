@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import { API } from "../../source/api.js";
 import {
   Typography,
   TextField,
@@ -10,6 +11,14 @@ import {
 // import Textarea from "@mui/joy/Textarea";
 
 const Notice = () => {
+  const [isAlert, setIsAlert] = useState("");
+  console.log("this is notice", isAlert);
+  const handlePublish = async () => {
+    try {
+      let response = await API.getAlert({ isAlert });
+    } catch (error) {}
+  };
+
   return (
     <>
       <Box sx={{ height: "100vh", mt: 10, minWidth: "60vw" }}>
@@ -20,6 +29,8 @@ const Notice = () => {
           label="Enter your message"
           name="Message"
           variant="outlined"
+          value={isAlert}
+          onChange={(e) => setIsAlert(e.target.value)}
           fullWidth
           required
           multiline
@@ -32,6 +43,7 @@ const Notice = () => {
               color: "white",
               textTransform: "capitalize",
             }}
+            onClick={handlePublish}
           >
             Publish
           </Button>

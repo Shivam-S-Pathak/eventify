@@ -1,8 +1,8 @@
-require('dotenv').config();
-const nodemailer = require('nodemailer');
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: "noreplyblogifyteam@gmail.com", // Your Gmail address
     pass: "dbet novy wqhz tvcl", // Your Gmail App password (App-specific password if 2FA is enabled)
@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // async..await is not allowed in global scope, must use a wrapper
-async function sendsosmail(sendto, msg) {
+async function sendsosmail(sendto, isAlert) {
   try {
     // send mail with defined transport object
     const info = await transporter.sendMail({
@@ -31,7 +31,7 @@ async function sendsosmail(sendto, msg) {
             </p>
             <div style="background-color: #f8d7da; padding: 15px; border-left: 5px solid #e74c3c; margin: 20px 0;">
               <p style="font-size: 16px; color: #721c24; line-height: 1.6;">
-                <strong>SOS Message:</strong> ${msg}
+                <strong>SOS Message:</strong> ${isAlert}
               </p>
             </div>
             <p style="font-size: 16px; color: #333333; line-height: 1.6;">

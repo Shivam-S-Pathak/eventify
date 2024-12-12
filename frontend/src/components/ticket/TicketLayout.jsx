@@ -1,173 +1,164 @@
-import React, { useRef } from "react";
-import { Box, Typography, Button } from "@mui/material";
-import html2pdf from "html2pdf.js";
+import React from "react";
+import { Box, Typography, Grid, Paper, Button } from "@mui/material";
+import html2pdf from "html2pdf.js"; // Import the html2pdf.js library
 
-const Ticket = () => {
-  const ticketRef = useRef();
-
+const Ticket = ({ result }) => {
   const handleDownload = () => {
+    const element = document.getElementById("print-ticket");
+
+    // Options for html2pdf
     const options = {
-      margin: 0.5,
-      filename: "SaitHackathon2024_Ticket.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      margin: 10,
+      filename: "ticket.pdf",
+      html2canvas: { scale: 4 }, // Increase scale for better quality
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    html2pdf()
-      .from(ticketRef.current)
-      .set(options)
-      .save();
+
+    html2pdf().from(element).set(options).save();
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 3,
-       
-        maxWidth: "800px",
-        margin: "auto",
-        position: "relative",
-      }}
-    >
-      {/* Ticket Content wrapped with ref */}
-      <Box
-        ref={ticketRef}
-        sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 3,
-            borderRadius: 2,
-            maxWidth: "800px",
-            margin: "auto",
-            position: "relative",
-            backgroundImage: "linear-gradient(45deg, #FF4081, #00BCD4)", 
-            backgroundSize: "cover",
-            color: "#FFF",
-        }}
-      >
-        {/* Tearable Section */}
-        <Box
+    <div>
+      {/* Ticket Wrapper */}
+      <div id="print-ticket">
+        <Paper
+          elevation={8}
           sx={{
-            width: "120px",
-            backgroundColor: "#000",
-            color: "#FFF",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 2,
-            textAlign: "center",
-            borderRight: "2px dashed #FFF",
+            width: "400px",
+            margin: "20px auto",
+            borderRadius: "16px",
+            overflow: "hidden",
+            background: "#f5f5f5",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              writingMode: "vertical-lr",
-              transform: "rotate(180deg)",
-            }}
-          >
-            Shivam Pathak
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Ticket Code: 2024048
-          </Typography>
-        </Box>
-
-        {/* Main Content */}
-        <Box
-          sx={{
-            flex: 1,
-            backgroundColor: "#FFF",
-            color: "#000",
-            display: "flex",
-            flexDirection: "column",
-            padding: 3,
-            position: "relative",
-          }}
-        >
-          {/* Event Image */}
+          {/* Participant Section */}
           <Box
             sx={{
-              backgroundImage: "url('/hacathons.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              borderRadius: "8px",
-              marginBottom: 2,
-              height: "150px",  // Added height to make sure the image shows well
-            }}
-          ></Box>
-
-          {/* Event Details */}
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              fontFamily: "Arial, sans-serif",
+              background: "#3f51b5",
+              padding: "20px",
+              color: "#fff",
               textAlign: "center",
-              mb: 2,
             }}
           >
-            Sait Hackathon 2024
-          </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center", mb: 1 }}>
-            Participant: <strong>Shivam Pathak</strong>
-          </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center", mb: 1 }}>
-            Reference Ticket Number: 2024048
-          </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center", mb: 1 }}>
-            Date: August 15, 2024 | Venue: Tech Arena
-          </Typography>
-        </Box>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                textAlign: "center",
+                letterSpacing: "1px",
+              }}
+            >
+              Eventify
+            </Typography>
 
-        {/* Right Section */}
-        <Box
-          sx={{
-            width: "120px",
-            backgroundColor: "#FF4081",
-            color: "#FFF",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 2,
-          }}
-        >
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            Gate
-          </Typography>
-          <Typography variant="h4">A1</Typography>
-          <Typography variant="h6" sx={{ fontWeight: "bold", mt: 2 }}>
-            Seat
-          </Typography>
-          <Typography variant="h4">04</Typography>
-        </Box>
-      </Box>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                mt: 2,
+                textAlign: "center",
+                textDecoration: "underline",
+              }}
+            >
+              {result.EventName}
+            </Typography>
+
+            <Box sx={{ mt: 3, textAlign: "center" }}>
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                Participant Name:
+              </Typography>
+              <Typography sx={{ marginBottom: "8px" }}>
+                {result.createdBy.fullname}
+              </Typography>
+
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                Venue:
+              </Typography>
+              <Typography sx={{ marginBottom: "8px" }}>
+                St. Aloysius institute of Technology, Jabalpur
+              </Typography>
+
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                Time:
+              </Typography>
+              <Typography sx={{ marginBottom: "8px" }}>
+                10:00 AM - 4:00 PM
+              </Typography>
+
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                Ticket Price:
+              </Typography>
+              <Typography sx={{ marginBottom: "8px" }}>50 INR</Typography>
+            </Box>
+          </Box>
+
+          {/* Tearable Section */}
+          <Box
+            sx={{
+              background: "lightgrey",
+              padding: "10px 20px",
+              borderTop: "2px dashed #ccc",
+              position: "relative",
+              textAlign: "center",
+            }}
+          >
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Grid item xs={6}>
+                <Box>
+                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                    Event Name:
+                  </Typography>
+                  <Typography>{result.EventName}</Typography>
+
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: "bold", mt: 1 }}
+                  >
+                    Date:
+                  </Typography>
+                  <Typography>12th December 2024</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box>
+                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                    Ticket No.:
+                  </Typography>
+                  <Typography>{result.Ticket_No}</Typography>
+
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: "bold", mt: 1 }}
+                  >
+                    Participant:
+                  </Typography>
+                  <Typography> {result.createdBy.fullname}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Paper>
+      </div>
 
       {/* Download Button */}
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 20,
-          right: 20,
-        }}
-      >
+      <Box sx={{ textAlign: "center", padding: "20px" }}>
         <Button
           variant="contained"
           color="primary"
           onClick={handleDownload}
+          sx={{
+            background: "#3f51b5",
+            "&:hover": {
+              background: "#303f9f",
+            },
+            textTransform: "none",
+          }}
         >
-          Download Ticket (PDF)
+          Download Ticket
         </Button>
       </Box>
-    </Box>
+    </div>
   );
 };
 

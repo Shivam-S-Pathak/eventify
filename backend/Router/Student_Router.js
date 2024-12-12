@@ -8,8 +8,4 @@ router.post("/student/sendsosmail", sosmail);
 router.post("/student/generateIdCard", generateIdCard);
 
 
-
-// router.post("/organiser/signup", organiserSignup);
-// router.post("/organiser/signin", organiserLogin);
-
 module.exports = router;
