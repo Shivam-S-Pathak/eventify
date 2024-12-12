@@ -63,13 +63,13 @@ const sosmail=async(req,res)=>{
     const {msg}=req.body
     const stud = await Student.find()
 
-    console.log(msg);
-    console.log(typeof(stud));
+    // console.log(msg)
+    // console.log(typeof(stud));
     const emailIds = stud.map((e)=>e.email)
-    console.log(emailIds);
+    // console.log(emailIds);
     for (let i = 0; i < emailIds.length; i++) {
       
-      console.log(emailIds[i],msg);
+      // console.log(emailIds[i],msg);
       await alertmail(emailIds[i],msg)
       
     }
