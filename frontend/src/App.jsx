@@ -147,20 +147,7 @@ function App() {
               />
             </Route>
 
-            <Route
-              path="/organiser/verify-ticket"
-              element={
-                <PrivateRoute2
-                  isAuthenticated2={isAuthenticated2}
-                  setIsAuthenticated2={setIsAuthenticated2}
-                />
-              }
-            >
-              <Route
-                path="/organiser/verify-ticket"
-                element={<VerifyTicket />}
-              />
-            </Route>
+            <Route path="/verify-ticket" element={<VerifyTicket />} />
 
             <Route
               path="/organiser/notice"
