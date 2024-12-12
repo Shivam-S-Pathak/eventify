@@ -201,7 +201,7 @@ const LandingPage = () => {
                 to="/verify-ticket"
                 sx={{ color: 'white', borderColor: 'white', borderRadius: '50px', px: 4 , m:1 }}
               >
-                Verify Ticket
+                Verify/Generate Ticket
               </Button>
             </Box>
           </motion.div>
