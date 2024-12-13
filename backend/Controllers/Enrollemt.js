@@ -27,6 +27,7 @@ const createEnrollment = async (req, res) => {
       EventName,
       email,
       createdBy,
+      Ticket_No = 0,
       status = "pending",
     } = req.body;
 

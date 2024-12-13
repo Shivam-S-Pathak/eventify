@@ -2,7 +2,7 @@ const Event = require("../Schema/Events");
 const cloudinary = require("../config/Cloudinary_config.js");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const enrollment= require("../Schema/Enrollment.js")
+const enrollment = require("../Schema/Enrollment.js");
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -82,14 +82,13 @@ const closeevent = async (req, res) => {
   }
 };
 
-const allParticipents = async (req,res) => {
+const allParticipents = async (req, res) => {
   try {
-    const enroll = await enrollment.find().populate("createdBy")
-    if(enroll){
-      res.status(500).json({enroll})
-    }
-    else{
-      res.status(404).send({"msg":"CANNOT FIND THE ENROLLENT"})
+    const enroll = await enrollment.find().populate("createdBy");
+    if (enroll) {
+      res.status(200).json({ enroll });
+    } else {
+      res.status(404).send({ msg: "CANNOT FIND THE ENROLLENT" });
     }
   } catch (error) {
     res.status(500).send({
@@ -97,7 +96,6 @@ const allParticipents = async (req,res) => {
       error: error.message,
     });
   }
-  
 };
 
 module.exports = {
