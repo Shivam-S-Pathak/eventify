@@ -12,11 +12,18 @@ import {
 
 const Notice = () => {
   const [isAlert, setIsAlert] = useState("");
-  console.log("this is notice", isAlert);
+  const [sending, setSending] = useState(false);
   const handlePublish = async () => {
-    try {
-      let response = await API.getAlert({ isAlert });
-    } catch (error) {}
+    if (isAlert !== "") {
+      setSending(true);
+      try {
+        let response = await API.getAlert({ isAlert });
+      } catch (error) {}
+    } else {
+      alert("Enter some sos message ");
+    }
+    setSending(false);
+    alert("your sos message has been sent");
   };
 
   return (
@@ -45,7 +52,7 @@ const Notice = () => {
             }}
             onClick={handlePublish}
           >
-            Publish
+            {sending ? "Publishing..." : "Publish"}
           </Button>
         </Box>
       </Box>

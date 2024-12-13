@@ -8,14 +8,25 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Grid from "@mui/material/Grid2";
 
-const OrganiserEventList = ({ setIsregister, isRegister }) => {
+const OrganiserEventList = () => {
   const [events, setEvents] = useState([]);
 
-  const handleClose = () => {
-    setIsregister(!isRegister);
+  const handleClose = async (id, currentStatus) => {
+    try {
+      // Optimistic update
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event._id === id ? { ...event, isclosed: !currentStatus } : event
+        )
+      );
+
+      // Update the status in the database
+      await API.closeregistration({ id, isclosed: !currentStatus });
+    } catch (error) {
+      console.error("Error updating registration status:", error);
+    }
   };
 
   useEffect(() => {
@@ -70,7 +81,7 @@ const OrganiserEventList = ({ setIsregister, isRegister }) => {
                   display: "flex",
                   flexDirection: "column",
                   width: "100%",
-                  bgcolor: isRegister ? "grey" : "transparent",
+                  bgcolor: event.isclosed ? "grey" : "transparent",
                   maxWidth: 320,
                   margin: "0 auto",
                   boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
@@ -117,62 +128,31 @@ const OrganiserEventList = ({ setIsregister, isRegister }) => {
                   </Typography>
 
                   <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-                    {/* Enroll Now Button */}
-                    {isRegister ? (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        sx={{
-                          flexGrow: 1,
-                          bgcolor: "#6a11cb",
-                          "&:hover": {
-                            bgcolor: "#1e62d5",
-                            transform: "scale(1.05)",
-                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                          },
-                          transition:
-                            "background 0.3s, transform 0.3s, box-shadow 0.3s",
-                          borderRadius: 4,
-                          textTransform: "none",
-                          padding: "10px 20px",
-                          fontWeight: "bold",
-                          fontSize: "13px",
-                          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                        }}
-                        onClick={handleClose}
-                      >
-                        Close registration
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        sx={{
-                          flexGrow: 1,
-                          bgcolor: "#2575fc",
-                          "&:hover": {
-                            bgcolor: "#1e62d5",
-                            transform: "scale(1.05)",
-                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
-                          },
-                          transition:
-                            "background 0.3s, transform 0.3s, box-shadow 0.3s",
-                          borderRadius: 4,
-                          textTransform: "none",
-                          padding: "10px 20px",
-                          fontWeight: "bold",
-                          fontSize: "13px",
-                          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                        }}
-                        onClick={handleClose}
-                      >
-                        Open registration
-                      </Button>
-                    )}
-
-                    {/* Learn More Button */}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      sx={{
+                        flexGrow: 1,
+                        bgcolor: event.isclosed ? "grey" : "#2575fc",
+                        "&:hover": {
+                          bgcolor: event.isclosed ? "darkgrey" : "#1e62d5",
+                          transform: "scale(1.05)",
+                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                        },
+                        transition:
+                          "background 0.3s, transform 0.3s, box-shadow 0.3s",
+                        borderRadius: 4,
+                        textTransform: "none",
+                        padding: "10px 20px",
+                        fontWeight: "bold",
+                        fontSize: "13px",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                      }}
+                      onClick={() => handleClose(event._id, event.isclosed)}
+                    >
+                      {event.isclosed ? "Open Registration" : "Close Registration"}
+                    </Button>
                     <Button
                       variant="outlined"
                       color="primary"

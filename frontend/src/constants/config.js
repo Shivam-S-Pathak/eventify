@@ -1,7 +1,7 @@
 // API messages
 
-export const API_URL = "https://major1-pearl.vercel.app";
-// export const API_URL = "http://localhost:8005";
+// export const API_URL = "https://major1-pearl.vercel.app";
+export const API_URL = "http://localhost:8005";
 export const API_MESSAGES = {
   loading: {
     title: "loading...",
@@ -47,4 +47,6 @@ export const SERVICE_URLS = {
   getEvents: { url: "/my-events", method: "GET" },
   generateIdCard: { url: "/student/generateIdCard", method: "POST" },
   getAlert: { url: "/student/sendsosmail", method: "POST" },
+  closeregistration: { url: (id) => `/event/close/${id}`, method: "PATCH" },
+  getEnrollments: { url: "/participent-data", method: "POST" },
 };

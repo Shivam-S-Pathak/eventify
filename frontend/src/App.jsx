@@ -22,6 +22,7 @@ import OrganiserNavBar from "./components/Navbar/OrganiserNavbar.jsx";
 import StudentNavBar from "./components/Navbar/StudentNavBar.jsx";
 import VerifyTicket from "./components/ticket/verifyTicket.jsx";
 import Notice from "./components/Alert/Notice.jsx";
+import EnrolledStudents from "./components/participents/ALLparticipants.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
@@ -142,6 +143,26 @@ function App() {
                     isAuthenticated2={isAuthenticated2}
                     isRegister={isRegister}
                     setIsregister={setIsregister}
+                  />
+                }
+              />
+            </Route>
+
+            <Route
+              path="/organiser/view-participants"
+              element={
+                <PrivateRoute2
+                  isAuthenticated2={isAuthenticated2}
+                  setIsAuthenticated2={setIsAuthenticated2}
+                />
+              }
+            >
+              <Route
+                path="/organiser/view-participants"
+                element={
+                  <EnrolledStudents
+                    setIsAuthenticated2={setIsAuthenticated2}
+                    isAuthenticated2={isAuthenticated2}
                   />
                 }
               />

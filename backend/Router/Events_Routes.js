@@ -4,11 +4,13 @@ const {
   upload,
   createEvent,
   getAllEvents,
-  closeevent
+  closeevent,
+  allParticipents,
 } = require("../Controllers/Events.js");
 
 router.post("/event/create", upload.single("image"), createEvent);
 router.get("/event/show", getAllEvents);
 router.patch("/event/close/:id", closeevent);
+router.post("/participent-data", allParticipents);
 
 module.exports = router;

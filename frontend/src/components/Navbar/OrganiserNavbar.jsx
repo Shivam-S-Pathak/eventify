@@ -100,47 +100,41 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
     <div>
       <Toolbar />
       <List>
-        {[
-          "Events",
-          "Participants",
-          "Verify Ticket",
-          "Alert Notice",
-          "Settings",
-        ].map((text, index) => (
-          <ListItem
-            button
-            key={text}
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              if (index === 0) {
-                navigate("/organiser/homepage");
-              } else if (index === 1) {
-                navigate("/organiser/view-participants");
-              } else if (index === 4) {
-                navigate("/organiser/settings");
-              } else if (index === 2) {
-                navigate("/verify-ticket");
-              } else if (index === 3) {
-                navigate("/organiser/notice");
-              }
-            }}
-          >
-            <ListItemIcon>
-              {index === 0 ? (
-                <EventIcon />
-              ) : index === 1 ? (
-                <PeopleIcon />
-              ) : index === 2 ? (
-                <TaskAltIcon />
-              ) : index === 3 ? (
-                <ErrorIcon />
-              ) : (
-                <SettingsIcon />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {["Events", "Participants", "Alert Notice", "Settings"].map(
+          (text, index) => (
+            <ListItem
+              button
+              key={text}
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                if (index === 0) {
+                  navigate("/organiser/homepage");
+                } else if (index === 1) {
+                  navigate("/organiser/view-participants");
+                } else if (index === 3) {
+                  navigate("/organiser/settings");
+                } else if (index === 2) {
+                  navigate("/organiser/notice");
+                }
+              }}
+            >
+              <ListItemIcon>
+                {index === 0 ? (
+                  <EventIcon />
+                ) : index === 1 ? (
+                  <PeopleIcon />
+                ) : index === 2 ? (
+                  <TaskAltIcon />
+                ) : index === 3 ? (
+                  <ErrorIcon />
+                ) : (
+                  <SettingsIcon />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          )
+        )}
       </List>
     </div>
   );
