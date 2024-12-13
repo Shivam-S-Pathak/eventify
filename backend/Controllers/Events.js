@@ -50,10 +50,10 @@ const getAllEvents = async (req, res) => {
 };
 
 const closeevent=async(req,res)=>{
-   const e_id=req.params.id
+   const id=req.params.id
    try {
     const e_data=await Event.findByIdAndUpdate(
-     e_id,
+     id,
      {
        isclosed:"true"
      },
