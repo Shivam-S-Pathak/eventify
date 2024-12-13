@@ -133,7 +133,9 @@ const EventList = () => {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        handleEnrollmentOpen();
+                        {
+                          event.isclosed ? "" : handleEnrollmentOpen();
+                        }
                         setEvtName(event.title);
                       }}
                       sx={{
@@ -149,7 +151,7 @@ const EventList = () => {
                       }}
                       endIcon={<ArrowForwardIcon />}
                     >
-                      Enroll Now
+                      {event.isclosed ? "Enrollment Closed" : "Enroll Now"}
                     </Button>
 
                     {/* Learn More Button */}

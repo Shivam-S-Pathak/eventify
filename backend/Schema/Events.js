@@ -20,7 +20,6 @@ const eventSchema = new mongoose.Schema({
   },
   isclosed: {
     type: Boolean,
-
     default: "false",
   },
 });

@@ -151,7 +151,9 @@ const OrganiserEventList = () => {
                       }}
                       onClick={() => handleClose(event._id, event.isclosed)}
                     >
-                      {event.isclosed ? "Open Registration" : "Close Registration"}
+                      {event.isclosed
+                        ? "Open Registration"
+                        : "Close Registration"}
                     </Button>
                     <Button
                       variant="outlined"
