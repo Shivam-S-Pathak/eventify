@@ -110,7 +110,7 @@ const OrganiserNavBar = ({ isAuthenticated2, setIsAuthenticated2 }) => {
                 if (index === 0) {
                   navigate("/organiser/homepage");
                 } else if (index === 1) {
-                  navigate("/organiser/view-participants");
+                  navigate("/event/participent-data");
                 } else if (index === 3) {
                   navigate("/organiser/settings");
                 } else if (index === 2) {

@@ -149,7 +149,7 @@ function App() {
             </Route>
 
             <Route
-              path="/organiser/view-participants"
+              path="/event/participent-data"
               element={
                 <PrivateRoute2
                   isAuthenticated2={isAuthenticated2}
@@ -158,7 +158,7 @@ function App() {
               }
             >
               <Route
-                path="/organiser/view-participants"
+                path="/event/participent-data"
                 element={
                   <EnrolledStudents
                     setIsAuthenticated2={setIsAuthenticated2}

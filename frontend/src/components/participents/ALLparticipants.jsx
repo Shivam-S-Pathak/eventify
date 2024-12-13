@@ -20,7 +20,8 @@ const EnrolledStudents = () => {
   //     const fetchEnrollments = async () => {
   //       try {
   //         const response = await API.getEnrollments();
-  //         setEnrollments(response.data);
+  //         setEnrollments(response.data.enroll);
+  //         console.log("this is from the fectenrool", enrollments);
   //       } catch (error) {
   //         console.error("Error fetching enrollments:", error);
   //       }
