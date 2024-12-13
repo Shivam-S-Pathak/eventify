@@ -11,6 +11,6 @@ const {
 router.post("/event/create", upload.single("image"), createEvent);
 router.get("/event/show", getAllEvents);
 router.patch("/event/close/:id", closeevent);
-router.post("/participent-data", allParticipents);
+router.get("/event/participent-data", allParticipents);
 
 module.exports = router;
