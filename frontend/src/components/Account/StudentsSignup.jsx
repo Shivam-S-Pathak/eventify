@@ -145,7 +145,7 @@ const StudentSignup = () => {
             </Box>
           </form>
         </Box>
-        <Typography sx={{ color: "black", pb: 1 }}>
+        <Typography sx={{ color: "black", pb: 1 , textAlign:"center" }}>
           Already have an account?
           <Link to="/student/signin">Sign in</Link>
         </Typography>

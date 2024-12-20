@@ -81,7 +81,7 @@ const OrganizerHomePage = ({
       const response = await axios.post(`${API_URL}/event/create`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("Event added successfully:", response.data);
+   
       setNewEvent({ title: "", date: "", description: "" });
       setIsImage(null);
       setOpenAddEventDialog(false);

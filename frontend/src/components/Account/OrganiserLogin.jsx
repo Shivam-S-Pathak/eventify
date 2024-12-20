@@ -130,7 +130,7 @@ const OrganiserLogin = ({ setIsAuthenticated2 }) => {
                 sx={{
                   my: 2,
                   py: 1.2,
-                  mb: 6,
+                  // mb: 6,
                   textTransform: "capitalize",
                   fontSize: "1rem",
                   maxWidth: "100%",
@@ -143,6 +143,10 @@ const OrganiserLogin = ({ setIsAuthenticated2 }) => {
             </Box>
           </form>
         </Box>
+        <Typography sx={{ color: "black", pb: 1, textAlign: "center" }}>
+          Didn't have an account?
+          <Link to="/organiser/signup">Sign up</Link>
+        </Typography>
       </Box>
       <Button
         onClick={() => navigate("/")}
