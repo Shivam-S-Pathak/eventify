@@ -28,7 +28,7 @@ const team = [
     name: "Shivam Pathak",
     role: "Frontend Developer",
     desc: "Crafts beautiful and responsive UI for Eventify.",
-    image: "./public/shivam.jpg",
+    image: "./shivam.jpg",
     education: "B.Tech in Computer Science",
     technologies: [
       { tech: "React.js", level: 90 },
@@ -41,7 +41,7 @@ const team = [
     name: "Nilay Singh",
     role: "Backend Developer",
     desc: "Handles backend logic, database, and APIs.",
-    image: "./public/nilay.jpg",
+    image: "./nilay.jpg",
     education: "B.Tech in Information Technology",
     technologies: [
       { tech: "Node.js", level: 88 },
@@ -54,7 +54,7 @@ const team = [
     name: "Ayush Singh",
     role: "Mobile App Developer",
     desc: "Developed the Android & iOS apps for Eventify.",
-    image: "./public/ayush.jpg",
+    image: "./ayush.jpg",
     education: "B.Tech in Computer Engineering",
     technologies: [
       { tech: "React Native", level: 85 },
