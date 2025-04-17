@@ -23,6 +23,7 @@ import StudentNavBar from "./components/Navbar/StudentNavBar.jsx";
 import VerifyTicket from "./components/ticket/verifyTicket.jsx";
 import Notice from "./components/Alert/Notice.jsx";
 import EnrolledStudents from "./components/participents/ALLparticipants.jsx";
+import AboutUsSection from "./components/About/AboutUsSection.jsx";
 
 const PrivateRoute = ({ isAuthenticated, setIsAuthenticated }) => {
   return isAuthenticated ? (
@@ -65,6 +66,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/about" element={<AboutUsSection />}></Route>
             <Route
               path="/student/signin"
               element={
